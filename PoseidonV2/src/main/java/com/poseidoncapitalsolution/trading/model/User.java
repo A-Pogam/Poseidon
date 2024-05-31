@@ -1,5 +1,6 @@
 package com.poseidoncapitalsolution.trading.model;
 
+import jakarta.validation.constraints.Pattern;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
 
 import jakarta.persistence.Entity;
@@ -18,6 +19,8 @@ public class User {
 	@NotBlank(message = "Username is mandatory")
 	private String username;
 	@NotBlank(message = "Password is mandatory")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*]).{8,}$",
+			message = "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.")
 	private String password;
 	@NotBlank(message = "FullName is mandatory")
 	private String fullname;

@@ -11,7 +11,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SpringSecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -41,6 +41,8 @@ public class SecurityConfig {
                         .accessDeniedPage("/403.html")
                 );
     }
+
+
 
     // Custom RequestMatcher to match URLs
     private static class CustomRequestMatcher implements RequestMatcher {
