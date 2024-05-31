@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -14,25 +17,21 @@ public class CurvePoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "curveId")
+    @NotNull(message = "must not be null")
     private Integer curveId;
 
-    @Column(name = "asOfDate")
     private Timestamp asOfDate;
 
-    @Column(name = "term")
+    @NotBlank(message = "Term is mandatory")
     private Double term;
 
-    @Column(name = "value")
+    @NotBlank(message = "Value is mandatory")
     private Double value;
 
-    @Column(name = "creationDate")
     private Timestamp creationDate;
 
-    // Getters and Setters
 
     public Integer getId() {
         return id;
