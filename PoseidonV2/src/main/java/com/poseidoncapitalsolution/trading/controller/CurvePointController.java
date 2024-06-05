@@ -19,28 +19,27 @@ public class CurvePointController {
 	private ICurvePointService curvePointService;
 
 	@GetMapping("/list")
-	public String home(Model model) {
+	public String list(Model model) {
 		model.addAttribute("curvePoints", curvePointService.findAll());
 		return "curvePoint/list";
 	}
 
 	@GetMapping("/add")
-	public String addCurvePointForm(CurvePoint curvePoint) {
+	public String addForm(CurvePoint curvePoint) {
 		return "curvePoint/add";
 	}
 
-	@PostMapping("/validate")
-	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+	@PostMapping("/add")
+	public String add(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "curvePoint/add";
 		}
 		curvePointService.save(curvePoint);
-		model.addAttribute("curvePoints", curvePointService.findAll());
 		return "redirect:/curvePoint/list";
 	}
 
 	@GetMapping("/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+	public String updateForm(@PathVariable("id") Integer id, Model model) {
 		CurvePoint curvePoint = curvePointService.findById(id);
 		if (curvePoint == null) {
 			throw new IllegalArgumentException("Invalid curvePoint Id:" + id);
@@ -49,27 +48,19 @@ public class CurvePointController {
 		return "curvePoint/update";
 	}
 
-	@PostMapping("/update/{id}")
-	public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
+	@PutMapping("/update/{id}")
+	public String update(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			curvePoint.setId(id);
 			return "curvePoint/update";
 		}
 		curvePointService.update(id, curvePoint);
-		model.addAttribute("curvePoints", curvePointService.findAll());
 		return "redirect:/curvePoint/list";
 	}
 
-	@GetMapping("/delete/{id}")
-	public String deleteCurvePoint(@PathVariable("id") Integer id, Model model) {
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Integer id, Model model) {
 		curvePointService.deleteById(id);
-		model.addAttribute("curvePoints", curvePointService.findAll());
 		return "redirect:/curvePoint/list";
-	}
-
-	@GetMapping("/findByCurveId/{curveId}")
-	public String findByCurveId(@PathVariable("curveId") Integer curveId, Model model) {
-		model.addAttribute("curvePoints", curvePointService.findByCurveId(curveId));
-		return "curvePoint/list";
 	}
 }

@@ -19,18 +19,18 @@ public class BidController {
 	private IBidService bidService;
 
 	@GetMapping("/list")
-	public String home(Model model) {
+	public String getList(Model model) {
 		model.addAttribute("bids", bidService.findAll());
 		return "bid/list";
 	}
 
 	@GetMapping("/add")
-	public String addBidForm(Bid bid) {
+	public String getAddForm(Bid bid) {
 		return "bid/add";
 	}
 
-	@PostMapping("/validate")
-	public String validate(@Valid Bid bid, BindingResult result, Model model) {
+	@PostMapping("/add")
+	public String addBid(@Valid Bid bid, BindingResult result) {
 		if (result.hasErrors()) {
 			return "bid/add";
 		}
@@ -39,7 +39,7 @@ public class BidController {
 	}
 
 	@GetMapping("/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+	public String getUpdateForm(@PathVariable("id") Integer id, Model model) {
 		Bid bid = bidService.findById(id);
 		if (bid == null) {
 			throw new IllegalArgumentException("Invalid bid Id: " + id);
@@ -48,7 +48,7 @@ public class BidController {
 		return "bid/update";
 	}
 
-	@PostMapping("/update/{id}")
+	@PutMapping("/update/{id}")
 	public String updateBid(@PathVariable("id") Integer id, @Valid Bid bid, BindingResult result) {
 		if (result.hasErrors()) {
 			return "bid/update";
@@ -57,7 +57,9 @@ public class BidController {
 		return "redirect:/bid/list";
 	}
 
-	@GetMapping("/delete/{id}")
+
+
+	@RequestMapping("/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id) {
 		bidService.deleteById(id);
 		return "redirect:/bid/list";
