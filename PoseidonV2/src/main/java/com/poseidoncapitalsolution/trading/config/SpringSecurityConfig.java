@@ -28,12 +28,13 @@ public class SpringSecurityConfig {
                 .requestMatchers(new CustomRequestMatcher("/rule/**")).authenticated()
                 .requestMatchers(new CustomRequestMatcher("/trade/**")).authenticated()
                 .requestMatchers(new CustomRequestMatcher("/user/**")).authenticated()
-                .anyRequest().authenticated() // Any other request requires authentication
+                .anyRequest().authenticated()
                 .and()
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login").permitAll() // Custom login page
-                        .defaultSuccessUrl("/home.html", true)
-                )
+                        .loginPage("/login")
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/home", true))
                 .logout(logout -> logout
                         .permitAll()
                 )

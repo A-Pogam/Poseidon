@@ -1,56 +1,67 @@
 package com.poseidoncapitalsolution.trading.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
 import com.poseidoncapitalsolution.trading.model.Rule;
-
+import com.poseidoncapitalsolution.trading.service.contracts.IRuleService;
 import jakarta.validation.Valid;
+import java.util.List;
 
 @Controller
+@RequestMapping("/rule")
 public class RuleController {
-	
-	// TODO: Inject RuleName service
 
-	@RequestMapping("/ruleName/list")
-	public String home(Model model) {
-		// TODO: find all RuleName, add to model
-		return "ruleName/list";
+	@Autowired
+	private IRuleService ruleService;
+
+	@GetMapping("/list")
+	public String showRuleList(Model model) {
+		List<Rule> rules = ruleService.findAll();
+		model.addAttribute("rules", rules);
+		return "rule/list";
 	}
 
-	@GetMapping("/ruleName/add")
-	public String addRuleForm(Rule bid) {
-		return "ruleName/add";
+	@GetMapping("/add")
+	public String showAddRuleForm(Model model) {
+		model.addAttribute("rule", new Rule());
+		return "rule/add";
 	}
 
-	@PostMapping("/ruleName/validate")
-	public String validate(@Valid Rule ruleName, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return RuleName list
-		return "ruleName/add";
+	@PostMapping("/add")
+	public String addRule(@Valid Rule rule, BindingResult result) {
+		if (result.hasErrors()) {
+			return "rule/add";
+		}
+		ruleService.save(rule);
+		return "redirect:/rule/list";
 	}
 
-	@GetMapping("/ruleName/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get RuleName by Id and to model then show to the form
-		return "ruleName/update";
+	@GetMapping("/update/{id}")
+	public String showUpdateRuleForm(@PathVariable("id") Integer id, Model model) {
+		Rule rule = ruleService.findById(id);
+		if (rule == null) {
+			throw new IllegalArgumentException("Invalid rule Id:" + id);
+		}
+		model.addAttribute("rule", rule);
+		return "rule/update";
 	}
 
-	@PostMapping("/ruleName/update/{id}")
-	public String updateRuleName(@PathVariable("id") Integer id, @Valid Rule ruleName, BindingResult result,
-			Model model) {
-		// TODO: check required fields, if valid call service to update RuleName and
-		// return RuleName list
-		return "redirect:/ruleName/list";
+	@PutMapping("/update/{id}")
+	public String updateRule(@PathVariable("id") Integer id, @Valid Rule rule, BindingResult result) {
+		if (result.hasErrors()) {
+			rule.setId(id);
+			return "rule/update";
+		}
+		ruleService.update(id, rule);
+		return "redirect:/rule/list";
 	}
 
-	@GetMapping("/ruleName/delete/{id}")
-	public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
-		// TODO: Find RuleName by Id and delete the RuleName, return to Rule list
-		return "redirect:/ruleName/list";
+	@RequestMapping("/delete/{id}")
+	public String deleteRule(@PathVariable("id") Integer id) {
+		ruleService.deleteById(id);
+		return "redirect:/rule/list";
 	}
 }
