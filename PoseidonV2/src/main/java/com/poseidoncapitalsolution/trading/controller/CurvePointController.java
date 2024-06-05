@@ -63,4 +63,10 @@ public class CurvePointController {
 		curvePointService.deleteById(id);
 		return "redirect:/curvePoint/list";
 	}
+
+	@GetMapping("/findByCurveId/{curveId}")
+	public String findByCurveId(@PathVariable("curveId") Integer curveId, Model model) {
+		model.addAttribute("curvePoints", curvePointService.findByCurveId(curveId));
+		return "curvePoint/list";
+	}
 }
