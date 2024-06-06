@@ -1,6 +1,8 @@
 package com.poseidoncapitalsolution.trading.config;
 
+import com.poseidoncapitalsolution.trading.service.UserDetailsServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +15,9 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -22,12 +27,7 @@ public class SpringSecurityConfig {
         http
                 .authorizeRequests()
                 .requestMatchers(new CustomRequestMatcher("/home.html")).permitAll()
-                .requestMatchers(new CustomRequestMatcher("/bid/**")).authenticated()
-                .requestMatchers(new CustomRequestMatcher("/curvePoint/**")).authenticated()
-                .requestMatchers(new CustomRequestMatcher("/rating/**")).authenticated()
-                .requestMatchers(new CustomRequestMatcher("/rule/**")).authenticated()
-                .requestMatchers(new CustomRequestMatcher("/trade/**")).authenticated()
-                .requestMatchers(new CustomRequestMatcher("/user/**")).authenticated()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(formLogin -> formLogin
@@ -42,6 +42,11 @@ public class SpringSecurityConfig {
                         .accessDeniedPage("/403.html")
                 );
     }
+
+    protected UserDetailsServiceImpl userDetailsService() {
+        return userDetailsService;
+    }
+
 
 
 

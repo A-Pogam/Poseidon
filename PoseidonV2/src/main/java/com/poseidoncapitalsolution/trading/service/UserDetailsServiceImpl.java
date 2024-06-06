@@ -10,11 +10,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 
 import java.util.Collections;
 import java.util.Optional;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     private final ApplicationContext applicationContext;
@@ -31,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Optional<com.poseidoncapitalsolution.trading.model.User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("Email " + username + " does not match any user.");
+            throw new UsernameNotFoundException("Username " + " does not match any user.");
         }
         // Check if the password is null or empty
         if (user.get().getPassword() == null || user.get().getPassword().isEmpty()) {
