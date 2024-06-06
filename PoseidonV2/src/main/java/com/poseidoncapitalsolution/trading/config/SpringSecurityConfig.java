@@ -1,13 +1,14 @@
 package com.poseidoncapitalsolution.trading.config;
 
 import com.poseidoncapitalsolution.trading.service.UserDetailsServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 
@@ -23,45 +24,31 @@ public class SpringSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .requestMatchers(new CustomRequestMatcher("/home.html")).permitAll()
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        RequestMatcher loginPageMatcher = new AntPathRequestMatcher("/login");
 
-                .anyRequest().authenticated()
-                .and()
+
+        http.authorizeRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers(loginPageMatcher).permitAll()
+
+                        .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/home", true))
                 .logout(logout -> logout
-                        .permitAll()
-                )
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login"))
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/403.html")
-                );
+                        .accessDeniedPage("/403.html"));
+
+        return http.build();
     }
 
-    protected UserDetailsServiceImpl userDetailsService() {
+    @Bean
+    public UserDetailsServiceImpl userDetailsService() {
         return userDetailsService;
     }
 
-
-
-
-    // Custom RequestMatcher to match URLs
-    private static class CustomRequestMatcher implements RequestMatcher {
-        private final String path;
-
-        public CustomRequestMatcher(String path) {
-            this.path = path;
-        }
-
-        @Override
-        public boolean matches(HttpServletRequest request) {
-            String requestURI = request.getRequestURI();
-            return requestURI.matches(path) || requestURI.startsWith(path + "/");
-        }
-    }
 }
