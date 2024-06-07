@@ -1,8 +1,12 @@
 package com.poseidoncapitalsolution.trading.controller;
 
 import com.poseidoncapitalsolution.trading.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +21,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class UserController {
+
+	private final Logger logger = LogManager.getLogger(HomeController.class);
+
 
 	@Autowired
 	private UserRepository iUserRepository;
@@ -82,5 +89,8 @@ public class UserController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save user", e);
 		}
 	}
+
+
+
 
 	}
