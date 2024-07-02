@@ -25,12 +25,11 @@ public class TradeController {
 	}
 
 	@GetMapping("/add")
-	public String showAddTradeForm(Model model) {
-		model.addAttribute("trade", new Trade());
+	public String showAddTradeForm(Trade trade) {
 		return "trade/add";
 	}
 
-	@PostMapping("/add")
+	@PostMapping("/validate")
 	public String addTrade(@Valid Trade trade, BindingResult result) {
 		if (result.hasErrors()) {
 			return "trade/add";
@@ -59,7 +58,7 @@ public class TradeController {
 		return "redirect:/trade/list";
 	}
 
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteTrade(@PathVariable("id") Integer id) {
 		tradeService.deleteById(id);
 		return "redirect:/trade/list";

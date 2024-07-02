@@ -68,7 +68,7 @@ public class BidController {
 
 
 
-	@PostMapping("/bid/delete/{id}")
+	@GetMapping("/bid/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id) {
 		bidService.deleteById(id);
 		return "redirect:/bid/list";
