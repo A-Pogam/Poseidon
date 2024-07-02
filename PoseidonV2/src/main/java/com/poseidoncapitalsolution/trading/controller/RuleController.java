@@ -60,7 +60,7 @@ public class RuleController {
 		return "redirect:/rule/list";
 	}
 
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteRule(@PathVariable("id") Integer id) {
 		ruleService.deleteById(id);
 		return "redirect:/rule/list";

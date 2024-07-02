@@ -14,6 +14,12 @@ public class Rule {
 
     private String description;
 
+    private String json;
+
+    private String template;
+
+    private String sqlPart;
+
     public Integer getId() {
         return Id;
     }
@@ -54,21 +60,16 @@ public class Rule {
         this.template = template;
     }
 
-    public String getSql_part() {
-        return sql_part;
+    public String getSqlPart() {
+        return sqlPart;
     }
 
-    public void setSql_part(String sql_part) {
-        this.sql_part = sql_part;
+    public void setSqlPart(String sqlPart) {
+        this.sqlPart = sqlPart;
     }
 
-    @Column(name = "json")
-    private String json;
 
-    @Column(name = "template")
-    private String template;
 
-    @Column(name = "sql_part")
-    private String sql_part;
+
 
 }

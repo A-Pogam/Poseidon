@@ -63,6 +63,13 @@ public class Bid {
 
     private String side;
 
+    public Bid(Integer bidListId, String account, String type, Double bidQuantity) {
+        this.bidListId = bidListId;
+        this.account = account;
+        this.type = type;
+        this.bidQuantity = bidQuantity;
+    }
+
 
     public Integer getBidListId() {
         return bidListId;
