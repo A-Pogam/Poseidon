@@ -1,5 +1,6 @@
 package com.poseidoncapitalsolution.trading.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,5 +64,10 @@ public class RuleController {
 	public String deleteRule(@PathVariable("id") Integer id) {
 		ruleService.deleteById(id);
 		return "redirect:/rule/list";
+	}
+
+	@ModelAttribute("remoteUser")
+	public Object remoteUser(final HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getRemoteUser();
 	}
 }

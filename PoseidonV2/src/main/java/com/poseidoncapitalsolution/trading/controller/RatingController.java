@@ -2,6 +2,7 @@ package com.poseidoncapitalsolution.trading.controller;
 
 import com.poseidoncapitalsolution.trading.model.Rating;
 import com.poseidoncapitalsolution.trading.service.contracts.IRatingService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,5 +65,10 @@ public class RatingController {
 		ratingService.deleteById(id);
 		model.addAttribute("ratings", ratingService.findAll());
 		return "redirect:/rating/list";
+	}
+
+	@ModelAttribute("remoteUser")
+	public Object remoteUser(final HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getRemoteUser();
 	}
 }

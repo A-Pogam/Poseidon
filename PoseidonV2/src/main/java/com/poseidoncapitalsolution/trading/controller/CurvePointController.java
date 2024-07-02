@@ -1,5 +1,6 @@
 package com.poseidoncapitalsolution.trading.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,5 +69,10 @@ public class CurvePointController {
 	public String findByCurveId(@PathVariable("curveId") Integer curveId, Model model) {
 		model.addAttribute("curvePoints", curvePointService.findByCurveId(curveId));
 		return "curvePoint/list";
+	}
+
+	@ModelAttribute("remoteUser")
+	public Object remoteUser(final HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getRemoteUser();
 	}
 }

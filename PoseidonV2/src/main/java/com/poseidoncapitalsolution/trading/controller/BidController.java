@@ -1,6 +1,7 @@
 package com.poseidoncapitalsolution.trading.controller;
 
 import com.poseidoncapitalsolution.trading.repository.contracts.BidRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +73,10 @@ public class BidController {
 	public String deleteBid(@PathVariable("id") Integer id) {
 		bidService.deleteById(id);
 		return "redirect:/bid/list";
+	}
+
+	@ModelAttribute("remoteUser")
+	public Object remoteUser(final HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getRemoteUser();
 	}
 }

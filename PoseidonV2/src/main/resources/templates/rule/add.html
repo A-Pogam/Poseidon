@@ -8,11 +8,11 @@
 	</head>
 	<body>
 		<div class="container">
-	
+
 			<div class="row">
 				<h2>Add New Rule</h2>
 			</div>
-	
+
 			<div class="row">
 				<form action="#" th:action="@{/rule/validate}"
 					th:object="${rule}" method="post" class="form-horizontal"
@@ -72,8 +72,8 @@
 								th:errors="*{sqlPart}"></p>
 						</div>
 					</div>
-	
-	
+
+
 					<div class="form-group">
 						<div class="col-sm-12">
 							<a class="btn btn-danger btn-sm" href="/rule/list">Cancel</a> <input
