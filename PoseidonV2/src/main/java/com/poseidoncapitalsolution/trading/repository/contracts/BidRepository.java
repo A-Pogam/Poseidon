@@ -10,6 +10,7 @@ import com.poseidoncapitalsolution.trading.model.Bid;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public interface BidRepository extends JpaRepository<Bid, Integer> {
 

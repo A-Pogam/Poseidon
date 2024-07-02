@@ -49,7 +49,7 @@ public class RuleController {
 		return "rule/update";
 	}
 
-	@PutMapping("/update/{id}")
+	@PostMapping("/update/{id}")
 	public String updateRule(@PathVariable("id") Integer id, @Valid Rule rule, BindingResult result) {
 		if (result.hasErrors()) {
 			rule.setId(id);
@@ -59,7 +59,7 @@ public class RuleController {
 		return "redirect:/rule/list";
 	}
 
-	@RequestMapping("/delete/{id}")
+	@PostMapping("/delete/{id}")
 	public String deleteRule(@PathVariable("id") Integer id) {
 		ruleService.deleteById(id);
 		return "redirect:/rule/list";

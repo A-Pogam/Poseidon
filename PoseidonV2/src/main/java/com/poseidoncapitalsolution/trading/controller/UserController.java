@@ -31,7 +31,7 @@ public class UserController {
 	private UserService userService;
 
 
-	@RequestMapping("/user/list")
+	@GetMapping("/user/list")
 	public String getUserList(Model model) {
 		model.addAttribute("users", iUserRepository.findAll());
 		return "user/list";
@@ -51,7 +51,7 @@ public class UserController {
 		return "user/update";
 	}
 
-	@GetMapping("/user/delete/{id}")
+	@PostMapping("/user/delete/{id}")
 	public String deleteUser(@PathVariable("id") Integer id, Model model) {
 		User user = iUserRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		iUserRepository.delete(user);
@@ -60,7 +60,7 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 
-	@PutMapping("/user/update/{id}")
+	@PostMapping("/user/update/{id}")
 	public String putUserForUserUpdate(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "user/update";

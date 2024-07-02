@@ -34,7 +34,6 @@ public class RatingController {
 			return "rating/add";
 		}
 		ratingService.save(rating);
-		model.addAttribute("ratings", ratingService.findAll());
 		return "redirect:/rating/list";
 	}
 

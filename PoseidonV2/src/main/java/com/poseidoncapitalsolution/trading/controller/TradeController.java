@@ -49,7 +49,7 @@ public class TradeController {
 		return "trade/update";
 	}
 
-	@PutMapping("/update/{id}")
+	@PostMapping("/update/{id}")
 	public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade, BindingResult result) {
 		if (result.hasErrors()) {
 			trade.setTradeId(id);
@@ -59,7 +59,7 @@ public class TradeController {
 		return "redirect:/trade/list";
 	}
 
-	@RequestMapping("/delete/{id}")
+	@PostMapping("/delete/{id}")
 	public String deleteTrade(@PathVariable("id") Integer id) {
 		tradeService.deleteById(id);
 		return "redirect:/trade/list";

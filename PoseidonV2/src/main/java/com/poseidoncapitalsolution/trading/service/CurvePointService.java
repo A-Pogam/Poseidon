@@ -33,7 +33,7 @@ public class CurvePointService implements ICurvePointService {
 
     @Override
     public void update(Integer id, CurvePoint curvePoint) {
-        curvePoint.setId(id);
+        curvePoint.setCurveId(id);
         curvePointRepository.save(curvePoint);
     }
 

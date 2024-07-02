@@ -17,9 +17,6 @@ public class CurvePoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotNull(message = "must not be null")
     private Integer curveId;
 
     private Timestamp asOfDate;
@@ -33,13 +30,6 @@ public class CurvePoint {
     private Timestamp creationDate;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getCurveId() {
         return curveId;

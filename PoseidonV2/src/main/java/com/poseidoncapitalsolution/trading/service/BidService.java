@@ -6,6 +6,7 @@ import com.poseidoncapitalsolution.trading.service.contracts.IBidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,12 @@ public class BidService implements IBidService {
 
 	@Override
 	public List<Bid> findAll() {
-		return bidRepository.findAll();
+		List<Bid> bids;
+		bids = bidRepository.findAll();
+		if (bids == null) {
+			bids = new ArrayList<>();
+		}
+		return bids;
 	}
 
 	@Override
@@ -46,4 +52,5 @@ public class BidService implements IBidService {
 	public void resetBidTestTable() {
 		bidRepository.resetBidTestTable();
 	}
+
 }

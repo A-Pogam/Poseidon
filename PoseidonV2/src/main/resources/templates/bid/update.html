@@ -11,10 +11,11 @@
 			<div class="row">
 				<h2>Update Bid</h2>
 			</div>
-	
+
+			<!-- put is too recent for thymeleaf, had to keep post!-->
 			<div class="row">
 				<form action="#"
-					th:action="@{/bid/update/{id}(id=${bid.bidId})}"
+					th:action="@{/bid/update/{id}(id=${bid.bidListId})}"
 					th:object="${bid}" method="post" class="form-horizontal"
 					style="width: 100%">
 					<div class="form-group">
@@ -49,7 +50,7 @@
 	
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="hidden" th:field="*{id}"> <a
+							<input type="hidden" th:field="*{bidListId}"> <a
 								class="btn btn-danger btn-sm" href="/bid/list">Cancel</a> <input
 								class="btn btn-primary btn-sm" type="submit"
 								value="Update Bid List">

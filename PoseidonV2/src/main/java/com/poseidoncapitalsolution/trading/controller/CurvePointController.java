@@ -29,8 +29,8 @@ public class CurvePointController {
 		return "curvePoint/add";
 	}
 
-	@PostMapping("/add")
-	public String add(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+	@PostMapping("/validate")
+	public String add(@Valid CurvePoint curvePoint, BindingResult result) {
 		if (result.hasErrors()) {
 			return "curvePoint/add";
 		}
@@ -48,17 +48,17 @@ public class CurvePointController {
 		return "curvePoint/update";
 	}
 
-	@PutMapping("/update/{id}")
+	@PostMapping ("/update/{id}")
 	public String update(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			curvePoint.setId(id);
+			curvePoint.setCurveId(id);
 			return "curvePoint/update";
 		}
 		curvePointService.update(id, curvePoint);
 		return "redirect:/curvePoint/list";
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Integer id, Model model) {
 		curvePointService.deleteById(id);
 		return "redirect:/curvePoint/list";

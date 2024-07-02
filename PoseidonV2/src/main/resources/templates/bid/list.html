@@ -11,17 +11,10 @@
 			<div class="row">
 				<div class="col-6">
 					<a href="/bid/list">Bids</a>&nbsp;|&nbsp;
-					<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp; 
+					<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
 					<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
 					<a href="/trade/list">Trades</a>&nbsp;|&nbsp;
 					<a href="/rule/list">Rules</a>
-				</div>
-				<div class="col-6 text-right">
-					Logged in user: <b th:inline="text" class="user">
-						[[${#httpServletRequest.remoteUser}]] </b>
-					<form th:action="@{/app-logout}" method="POST">
-						<input type="submit" value="Logout" />
-					</form>
 				</div>
 			</div>
 			<div class="row">
@@ -40,19 +33,19 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="bid : ${bids}">
-							<td style="width: 10%" th:text="${bid.id}"></td>
-							<td th:text="${bid.account}"></td>
-							<td th:text="${bid.type}"></td>
-							<td th:text="${bid.bidQuantity}"></td>
-							<td style="width: 15%" class="text-center"><a
-								th:href="@{/bid/update/{id}(id=${bid.id})}">Edit</a>&nbsp;|&nbsp;
-								<a th:href="@{/bid/delete/{id}(id=${bid.id})}">Delete</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</body>
+					<tr th:each="bid : ${bids}">
+                        <td style="width: 10%" th:text="${bid.bidListId}"></td>
+						<td th:text="${bid.account}"></td>
+						<td th:text="${bid.type}"></td>
+						<td th:text="${bid.bidQuantity}"></td>
+						<td style="width: 15%" class="text-center"><a
+								th:href="@{/bid/update/{id}(id=${bid.bidListId})}">Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{/bid/delete/{id}(id=${bid.bidListId})}">Delete</a>
+						</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
 </html>
