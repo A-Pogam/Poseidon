@@ -44,7 +44,7 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void getBids_returnOk() throws Exception {
+    public void getList_returnOk() throws Exception {
         when(bidService.findAll()).thenReturn(bids);
 
         mockMvc.perform(get("/bid/list"))
@@ -55,7 +55,7 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void getBidAddForm_returnOk() throws Exception {
+    public void addBid() throws Exception {
         mockMvc.perform(get("/bid/add"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bid/add"))
@@ -64,7 +64,7 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void getBidUpdateForm_returnOk() throws Exception {
+    public void getUpdateForm_returnOk() throws Exception {
         when(bidService.findById(anyInt())).thenReturn(anyBid);
 
         mockMvc.perform(get("/bid/update/{id}", "1"))
@@ -75,7 +75,7 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void getBidUpdateForm_throwNoContent() throws Exception {
+    public void getUpdateForm_throwNoContent() throws Exception {
         when(bidService.findById(anyInt())).thenReturn(null);
 
         mockMvc.perform(get("/bid/update/{id}", "0"))
@@ -84,8 +84,7 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void postBidFromBidAddForm_successAndRedirectToListPage() throws Exception {
-        doNothing().when(bidService).save(any(Bid.class));
+    public void addBid_successAndRedirectToListPage() throws Exception {
         when(bidService.findAll()).thenReturn(bids);
 
         mockMvc.perform(post("/bid/validate")
@@ -99,7 +98,7 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void postBidFromBidAddForm_failAndReturnOk() throws Exception {
+    public void addBid_failAndReturnOk() throws Exception {
         mockMvc.perform(post("/bid/validate")
                         .with(csrf()))
                 .andExpect(status().isOk())
@@ -109,8 +108,7 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void postBidFromBidUpdateForm_successAndRedirectToListPage() throws Exception {
-        doNothing().when(bidService).update(anyInt(), any(Bid.class));
+    public void updateBid_successAndRedirectToListPage() throws Exception {
         when(bidService.findAll()).thenReturn(bids);
 
         mockMvc.perform(post("/bid/update/{id}", "1")
@@ -124,14 +122,9 @@ public class BidControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
-    public void postBidFromBidUpdateForm_failAndReturnOk() throws Exception {
-        Bid invalidBid = new Bid();
-        invalidBid.setAccount(null);
-        invalidBid.setType(null);
-        invalidBid.setBidQuantity(-1d);
+    public void updateBid_failAndReturnOk() throws Exception {
 
         mockMvc.perform(post("/bid/update/{id}", "1")
-                        .flashAttr("bid", invalidBid)
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bid/update"))
@@ -142,7 +135,6 @@ public class BidControllerTest {
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void deleteBid_successAndRedirectToListPage() throws Exception {
-        doNothing().when(bidService).update(anyInt(), any(Bid.class));
         when(bidService.findAll()).thenReturn(bids);
 
         mockMvc.perform(post("/bid/update/{id}", "1")
