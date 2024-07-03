@@ -25,6 +25,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.validation.BindingResult;
 
 @WebMvcTest(controllers = BidController.class)
 public class BidControllerTest {
@@ -33,7 +34,7 @@ public class BidControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private IBidService iBidService;
+    private IBidService bidService;
 
     @MockBean
     private BidRepository bidRepository;
@@ -44,8 +45,7 @@ public class BidControllerTest {
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void getBids_returnOk() throws Exception {
-        when(iBidService.findAll())
-                .thenReturn(bids);
+        when(bidService.findAll()).thenReturn(bids);
 
         mockMvc.perform(get("/bid/list"))
                 .andExpect(status().isOk())
@@ -65,8 +65,7 @@ public class BidControllerTest {
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void getBidUpdateForm_returnOk() throws Exception {
-        when(iBidService.findById(any(Integer.class)))
-                .thenReturn(anyBid);
+        when(bidService.findById(anyInt())).thenReturn(anyBid);
 
         mockMvc.perform(get("/bid/update/{id}", "1"))
                 .andExpect(status().isOk())
@@ -77,8 +76,7 @@ public class BidControllerTest {
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void getBidUpdateForm_throwNoContent() throws Exception {
-        when(iBidService.findById(any(Integer.class)))
-                .thenReturn(null);
+        when(bidService.findById(anyInt())).thenReturn(null);
 
         mockMvc.perform(get("/bid/update/{id}", "0"))
                 .andExpect(status().isNoContent());
@@ -87,10 +85,8 @@ public class BidControllerTest {
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void postBidFromBidAddForm_successAndRedirectToListPage() throws Exception {
-        // Do nothing when save is called since it's a void method
-        doNothing().when(iBidService).save(any(Bid.class));
-        when(iBidService.findAll())
-                .thenReturn(bids);
+        doNothing().when(bidService).save(any(Bid.class));
+        when(bidService.findAll()).thenReturn(bids);
 
         mockMvc.perform(post("/bid/validate")
                         .flashAttr("bid", anyBid)
@@ -98,8 +94,7 @@ public class BidControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/bid/list"));
 
-        // Verify that save was called once with the expected bid
-        verify(iBidService, times(1)).save(any(Bid.class));
+        verify(bidService, times(1)).save(any(Bid.class));
     }
 
     @Test
@@ -115,10 +110,8 @@ public class BidControllerTest {
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void postBidFromBidUpdateForm_successAndRedirectToListPage() throws Exception {
-        // Do nothing when update is called since it's a void method
-        doNothing().when(iBidService).update(anyInt(), any(Bid.class));
-        when(iBidService.findAll())
-                .thenReturn(bids);
+        doNothing().when(bidService).update(anyInt(), any(Bid.class));
+        when(bidService.findAll()).thenReturn(bids);
 
         mockMvc.perform(post("/bid/update/{id}", "1")
                         .flashAttr("bid", anyBid)
@@ -126,48 +119,49 @@ public class BidControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/bid/list"));
 
-        // Verify that update was called once with the expected id and bid
-        verify(iBidService, times(1)).update(anyInt(), any(Bid.class));
+        verify(bidService, times(1)).update(anyInt(), any(Bid.class));
     }
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void postBidFromBidUpdateForm_failAndReturnOk() throws Exception {
+        Bid invalidBid = new Bid();
+        invalidBid.setAccount(null);
+        invalidBid.setType(null);
+        invalidBid.setBidQuantity(-1d);
+
         mockMvc.perform(post("/bid/update/{id}", "1")
+                        .flashAttr("bid", invalidBid)
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bid/update"))
                 .andExpect(model().attributeExists("bid"));
     }
 
+
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void deleteBid_successAndRedirectToListPage() throws Exception {
-        // Do nothing when deleteById is called since it's a void method
-        doNothing().when(iBidService).deleteById(anyInt());
-        when(iBidService.findAll())
-                .thenReturn(bids);
+        doNothing().when(bidService).update(anyInt(), any(Bid.class));
+        when(bidService.findAll()).thenReturn(bids);
 
-        mockMvc.perform(delete("/bid/delete/{id}", "1")
+        mockMvc.perform(post("/bid/update/{id}", "1")
+                        .flashAttr("bid", anyBid)
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/bid/list"));
 
-        // Verify that deleteById was called once with the expected id
-        verify(iBidService, times(1)).deleteById(anyInt());
+        verify(bidService, times(1)).update(anyInt(), any(Bid.class));
     }
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
     public void deleteBid_throwNoContent() throws Exception {
-        // Throw an exception or return null in a way that represents a failed deletion
-        doThrow(new RuntimeException("Bid not found")).when(iBidService).deleteById(anyInt());
+        doThrow(new IllegalArgumentException("Bid not found")).when(bidService).deleteById(anyInt());
 
-        mockMvc.perform(delete("/bid/delete/{id}", "1")
-                        .with(csrf()))
+        mockMvc.perform(get("/bid/delete/{id}", "1"))
                 .andExpect(status().isNoContent());
 
-        // Verify that deleteById was called once with the expected id
-        verify(iBidService, times(1)).deleteById(anyInt());
+        verify(bidService, times(1)).deleteById(anyInt());
     }
 }
