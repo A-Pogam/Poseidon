@@ -1,100 +1,79 @@
 package com.poseidoncapitalsolution.trading.controller;
 
-import com.poseidoncapitalsolution.trading.service.UserService;
+import com.poseidoncapitalsolution.trading.model.User;
+import com.poseidoncapitalsolution.trading.service.contracts.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.poseidoncapitalsolution.trading.model.User;
-import com.poseidoncapitalsolution.trading.repository.contracts.UserRepository;
-
-import jakarta.validation.Valid;
-import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class UserController {
 
-	private final Logger logger = LogManager.getLogger(HomeController.class);
-
+	private final Logger logger = LogManager.getLogger(UserController.class);
 
 	@Autowired
-	private UserRepository iUserRepository;
-	@Autowired
-	private UserService userService;
+	private IUserService iUserService;
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/user/list")
 	public String getUserList(Model model) {
-		model.addAttribute("users", iUserRepository.findAll());
+		model.addAttribute("users", iUserService.getAllUsers());
 		return "user/list";
 	}
 
 	@GetMapping("/user/add")
-	public String addUser(User bid) {
+	public String addUser(User user) {
 		return "user/add";
 	}
 
-	@GetMapping("/user/update/{id}")
+	@PostMapping("/user/validate")
+	public String postUser(@Valid User user, BindingResult result) {
+			if (result.hasErrors()) {
+				return "user/add";
+			}
+			iUserService.saveUser(user);
+			return "redirect:/user/list";
+		}
+
+
+		@GetMapping("/user/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		User user = iUserRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		User user = iUserService.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+
 		user.setPassword("");
 
 		model.addAttribute("user", user);
 		return "user/update";
 	}
 
-	@PostMapping("/user/delete/{id}")
-	public String deleteUser(@PathVariable("id") Integer id, Model model) {
-		User user = iUserRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		iUserRepository.delete(user);
-
-		model.addAttribute("users", iUserRepository.findAll());
-		return "redirect:/user/list";
-	}
-
 	@PostMapping("/user/update/{id}")
-	public String putUserForUserUpdate(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
+	public String putUserForUserUpdate(@PathVariable("id") Integer id, @Valid User user, BindingResult result) {
 		if (result.hasErrors()) {
 			return "user/update";
 		}
-
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		user.setPassword(encoder.encode(user.getPassword()));
-		user.setId(id);
-		iUserRepository.save(user);
-
-		model.addAttribute("users", iUserRepository.findAll());
+		iUserService.saveUser(user);
 		return "redirect:/user/list";
 	}
 
-	@PostMapping("/user/validate")
-	public String postUser(@Valid @RequestBody User user, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user data");
-		}
-
-		try {
-			userService.saveUser(user);
-			model.addAttribute("users", userService.getAllUsers());
-			return "redirect:/user/list";
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save user", e);
-		}
+	@GetMapping("/user/delete/{id}")
+	public String deleteById(@PathVariable("id") Integer id) {
+		iUserService.deleteById(id);
+		return "redirect:/user/list";
 	}
 
 	@ModelAttribute("remoteUser")
 	public Object remoteUser(final HttpServletRequest httpServletRequest) {
 		return httpServletRequest.getRemoteUser();
 	}
-
-
-	}
+}
