@@ -31,7 +31,7 @@ public class RuleControllerTest {
     @MockBean
     private IRuleService ruleService;
 
-    private Rule anyRule = new Rule(1, "Rule1");
+    private Rule anyRule = new Rule(1, "Rule1", "test", "test", "test", "test");
     private List<Rule> rules = new ArrayList<>(Arrays.asList(anyRule, anyRule, anyRule));
 
     @Test

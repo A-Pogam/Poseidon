@@ -26,8 +26,12 @@ public class Rule {
     @NotBlank(message = "Sql is mandatory")
     private String sqlPart;
 
-    public Rule(Integer id, String name) {
+    public Rule(Integer id, String name, String description, String json, String template, String sqlPart) {
         this.name = name;
+        this.description = description;
+        this.json = json;
+        this.template = template;
+        this.sqlPart = sqlPart;
     }
 
     public Rule() {}

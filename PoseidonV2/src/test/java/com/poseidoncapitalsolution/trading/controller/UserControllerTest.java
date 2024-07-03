@@ -35,7 +35,7 @@ public class UserControllerTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    private User anyUser = new User(1, "username", "password", "test", "ROLE_USER");
+    private User anyUser = new User(1, "username", "Password59!", "test", "ROLE_USER");
 
     @Test
     @WithMockUser(username = "user", roles = { "USER" })
