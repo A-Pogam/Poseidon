@@ -6,7 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 import java.sql.Timestamp;
 
@@ -24,7 +25,7 @@ public class Bid {
     @NotBlank(message = "Type is mandatory")
     private String type;
 
-    @NotBlank(message = "Bid quantity is mandatory")
+    @NotNull(message = "Bid quantity is mandatory")
     private Double bidQuantity;
 
     private Double askQuantity;

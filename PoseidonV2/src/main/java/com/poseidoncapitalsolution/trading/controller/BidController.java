@@ -18,14 +18,12 @@ import jakarta.validation.Valid;
 @Controller
 public class BidController {
 
-	private final Logger logger = LogManager.getLogger(HomeController.class);
+	private final Logger logger = LogManager.getLogger(HomeController.class); //to do ?
 
 
 	@Autowired
 	private IBidService bidService;
 
-	@Autowired
-	private BidRepository iBidRepository;
 
 	@GetMapping("/bid/list")
 	public String getList(Model model) {
