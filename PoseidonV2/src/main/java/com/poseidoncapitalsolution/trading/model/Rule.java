@@ -1,6 +1,7 @@
 package com.poseidoncapitalsolution.trading.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "rule")
@@ -10,14 +11,19 @@ public class Rule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
+    @NotBlank(message = "Description is mandatory")
     private String description;
 
+    @NotBlank(message = "Json is mandatory")
     private String json;
 
+    @NotBlank(message = "Template is mandatory")
     private String template;
 
+    @NotBlank(message = "Sql is mandatory")
     private String sqlPart;
 
     public Integer getId() {

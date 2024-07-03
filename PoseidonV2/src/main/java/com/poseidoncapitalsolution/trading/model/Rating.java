@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "rating")
@@ -15,12 +17,16 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Moody's rating is mandatory")
     private String moodysRating;
 
+    @NotBlank(message = "SandPRaging is mandatory")
     private String sandPRating;
 
+    @NotBlank(message = "Fitch rating is mandatory")
     private String fitchRating;
 
+    @NotNull(message = "Order is mandatory")
     private Integer orderNumber;
 
 

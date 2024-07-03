@@ -11,6 +11,22 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.sql.Timestamp;
 
+/**
+ * Represents a bid in the trading system.
+ *
+ * <p>
+ * This entity is used to store information related to bids, including bid and ask quantities,
+ * associated accounts, and various other metadata.
+ * </p>
+ *
+ * <p>
+ * The class is mapped to the "bid" table in the database using JPA annotations.
+ * </p>
+ *
+ * @author Alice Pogam
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "bid")
 public class Bid {
@@ -64,6 +80,15 @@ public class Bid {
 
     private String side;
 
+
+    /**
+     * Constructs a new Bid object with specified parameters.
+     *
+     * @param bidListId   the unique identifier for the bid
+     * @param account     the account associated with the bid
+     * @param type        the type of bid
+     * @param bidQuantity the quantity of the bid
+     */
     public Bid(Integer bidListId, String account, String type, Double bidQuantity) {
         this.bidListId = bidListId;
         this.account = account;

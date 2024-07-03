@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 
@@ -20,10 +21,10 @@ public class CurvePoint {
 
     private Timestamp asOfDate;
 
-    @NotBlank(message = "Term is mandatory")
+    @NotNull(message = "Term is mandatory")
     private Double term;
 
-    @NotBlank(message = "Value is mandatory")
+    @NotNull(message = "Value is mandatory")
     private Double value;
 
     private Timestamp creationDate;

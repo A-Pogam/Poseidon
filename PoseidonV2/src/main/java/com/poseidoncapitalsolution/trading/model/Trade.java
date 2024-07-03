@@ -1,6 +1,9 @@
 package com.poseidoncapitalsolution.trading.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -11,10 +14,13 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tradeId;
 
+    @NotBlank(message = "Account is mandatory")
     private String account;
 
+    @NotBlank(message = "Type is mandatory")
     private String type;
 
+    @NotNull(message = "Buy quantity is mandatory")
     private Double buyQuantity;
 
     private Double sellQuantity;
