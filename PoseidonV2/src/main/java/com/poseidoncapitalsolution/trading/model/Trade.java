@@ -57,6 +57,14 @@ public class Trade {
 
     private String side;
 
+    public Trade(Integer id, String account, String type, Double buyQuantity) {
+        this.account = account;
+        this.type = type;
+        this.buyQuantity = buyQuantity;
+    }
+
+    public Trade() {}
+
 
     public Integer getTradeId() {
         return tradeId;

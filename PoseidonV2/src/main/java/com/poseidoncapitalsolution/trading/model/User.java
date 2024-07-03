@@ -28,6 +28,16 @@ public class User {
 	@NotBlank(message = "Role is mandatory")
 	private String role;
 
+	public User(Integer id, String username, String password, String fullname, String role) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.role = role;
+	}
+
+	public User() {}
+
 	public Integer getId() {
 		return id;
 	}

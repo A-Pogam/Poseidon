@@ -29,6 +29,16 @@ public class Rating {
     @NotNull(message = "Order is mandatory")
     private Integer orderNumber;
 
+    public Rating(Integer id, String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
+        this.id = id;
+        this.moodysRating = moodysRating;
+        this.sandPRating = sandPRating;
+        this.fitchRating = fitchRating;
+        this.orderNumber = orderNumber;
+    }
+
+    public Rating() {}
+
 
     public Integer getId() {
         return id;

@@ -26,6 +26,13 @@ public class Rule {
     @NotBlank(message = "Sql is mandatory")
     private String sqlPart;
 
+    public Rule(Integer id, String name) {
+        this.name = name;
+    }
+
+    public Rule() {}
+
+
     public Integer getId() {
         return Id;
     }
