@@ -16,7 +16,7 @@ import com.poseidoncapitalsolution.trading.model.Bid;
 import com.poseidoncapitalsolution.trading.service.contracts.IBidService;
 
 @SpringBootTest
-@TestPropertySource(locations = "file:config/application-test.properties")
+@TestPropertySource(locations = "file:src/main/resources/application-test.properties")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BidServiceIT {
 
