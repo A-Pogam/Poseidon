@@ -7,10 +7,11 @@ Poseidon is a trading application designed to manage and monitor trading activit
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
+- [Database Setup](#database-setup)
+- [Accessing the Application](#accessing-the-application)
 - [Running Tests](#running-tests)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-
 
 
 ## Installation
@@ -41,6 +42,22 @@ To run the application, use the following command:
 mvn spring-boot:run
 ```
 The application will be available at http://localhost:8080.
+
+## Database Setup
+The application uses an embedded H2 database which will be set up automatically when the application starts. If you need to use an external database, update the database configuration in the application.properties file:
+
+```sh
+spring.datasource.url=jdbc:mysql://localhost:3306/poseidon
+spring.datasource.username=root
+spring.datasource.password=rootroot
+```
+Ensure your database server is running and accessible.
+
+## Accessing the Application
+
+To access the application, navigate to http://localhost:8080 in your web browser. 
+
+You will need to create a new user account in the database. 
 
 ## Running Tests
 To run the tests, use the following command:
