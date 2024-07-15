@@ -10,9 +10,25 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Interceptor for logging HTTP requests and responses.
+ * This class implements {@link HandlerInterceptor} to provide custom pre-handle and after-completion logic
+ * for logging information about incoming HTTP requests and outgoing HTTP responses.
+ */
 public class EndpointListener implements HandlerInterceptor {
 
 	private static final Logger logger = LoggerFactory.getLogger(EndpointListener.class);
+
+	/**
+	 * Pre-handle method to log details about the incoming HTTP request.
+	 * This method logs the HTTP method, URL, and any request parameters.
+	 *
+	 * @param request the {@link HttpServletRequest} object
+	 * @param response the {@link HttpServletResponse} object
+	 * @param handler the handler (or {@link HandlerInterceptor}) that is being called
+	 * @return {@code true} to continue processing the request, {@code false} to halt the processing
+	 * @throws Exception in case of any errors during request handling
+	 */
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -28,6 +44,16 @@ public class EndpointListener implements HandlerInterceptor {
 		return true;
 	}
 
+	/**
+	 * After-completion method to log details about the outgoing HTTP response.
+	 * This method logs the response status and additional details based on the status code.
+	 *
+	 * @param request the {@link HttpServletRequest} object
+	 * @param response the {@link HttpServletResponse} object
+	 * @param handler the handler (or {@link HandlerInterceptor}) that was executed
+	 * @param exception any exception thrown on handler execution, if any
+	 * @throws Exception in case of any errors during response handling
+	 */
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) throws Exception {
 		int responseStatus = response.getStatus();

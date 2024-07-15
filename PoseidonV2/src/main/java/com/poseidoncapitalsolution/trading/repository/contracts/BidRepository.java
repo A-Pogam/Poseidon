@@ -10,10 +10,21 @@ import com.poseidoncapitalsolution.trading.model.Bid;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository interface for managing Bid entities.
+ * Extends {@link JpaRepository} to provide CRUD operations for Bid entities.
+ * Includes a custom method to reset the bid test table.
+ */
+
 
 @Repository
 public interface BidRepository extends JpaRepository<Bid, Integer> {
-
+	/**
+	 * Custom method to truncate the bid test table.
+	 * This method is annotated with {@link Modifying} and {@link Transactional}
+	 * to indicate that it performs a modifying operation and should be executed within a transaction.
+	 * The SQL query for truncating the table is defined in {@link SqlQuery#truncateBidTestTable}.
+	 */
 	@Modifying
 	@Transactional
 	@Query(value = SqlQuery.truncateBidTestTable, nativeQuery = true)

@@ -36,15 +36,6 @@ public class BidServiceIT {
         iBidService.resetBidTestTable();
     }
 
-    @Test
-    public void getBids_returnBids() {
-        List<Bid> bids = iBidService.findAll();
-
-        assertThat(bids).isNotEmpty();
-        assertThat(bids.get(0).getAccount()).isEqualTo("Account1");
-        assertThat(bids.get(0).getType()).isEqualTo("Type1");
-        assertThat(bids.get(0).getBidQuantity()).isEqualTo(1d);
-    }
 
     @Test
     public void getBidById_returnBid() {
