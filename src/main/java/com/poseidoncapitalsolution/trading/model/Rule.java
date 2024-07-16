@@ -27,7 +27,8 @@ public class Rule {
     private String sqlPart;
 
     public Rule(Integer id, String name, String description, String json, String template, String sqlPart) {
-        this.name = name;
+        this.Id = id;
+    	this.name = name;
         this.description = description;
         this.json = json;
         this.template = template;
@@ -85,8 +86,5 @@ public class Rule {
         this.sqlPart = sqlPart;
     }
 
-
-
-
-
+    
 }

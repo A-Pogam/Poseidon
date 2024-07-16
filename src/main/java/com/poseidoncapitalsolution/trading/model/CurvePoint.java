@@ -1,15 +1,13 @@
 package com.poseidoncapitalsolution.trading.model;
 
-import jakarta.persistence.Column;
+import java.sql.Timestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "curvepoint")
@@ -29,7 +27,7 @@ public class CurvePoint {
 
     private Timestamp creationDate;
 
-    public CurvePoint(Integer id, Integer curveId, Double term, Double value) {
+    public CurvePoint(Integer curveId, Double term, Double value) {
         this.curveId = curveId;
         this.term = term;
         this.value = value;
