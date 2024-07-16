@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RuleController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseidon-trading-application</a> &gt; <a href="index.source.html" class="el_package">com.poseidoncapitalsolution.trading.controller</a> &gt; <span class="el_source">RuleController.java</span></div><h1>RuleController.java</h1><pre class="source lang-java linenums">package com.poseidoncapitalsolution.trading.controller;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import com.poseidoncapitalsolution.trading.model.Rule;
+import com.poseidoncapitalsolution.trading.service.contracts.IRuleService;
+import jakarta.validation.Valid;
+import java.util.List;
+
+@Controller
+@RequestMapping(&quot;/rule&quot;)
+<span class="fc" id="L16">public class RuleController {</span>
+
+	@Autowired
+	private IRuleService ruleService;
+
+	@GetMapping(&quot;/list&quot;)
+	public String showRuleList(Model model) {
+<span class="fc" id="L23">		List&lt;Rule&gt; rules = ruleService.findAll();</span>
+<span class="fc" id="L24">		model.addAttribute(&quot;rules&quot;, rules);</span>
+<span class="fc" id="L25">		return &quot;rule/list&quot;;</span>
+	}
+
+	@GetMapping(&quot;/add&quot;)
+	public String showAddRuleForm(Model model) {
+<span class="fc" id="L30">		model.addAttribute(&quot;rule&quot;, new Rule());</span>
+<span class="fc" id="L31">		return &quot;rule/add&quot;;</span>
+	}
+
+	@PostMapping(&quot;/add&quot;)
+	public String addRule(@Valid Rule rule, BindingResult result) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc" id="L37">			return &quot;rule/add&quot;;</span>
+		}
+<span class="fc" id="L39">		ruleService.save(rule);</span>
+<span class="fc" id="L40">		return &quot;redirect:/rule/list&quot;;</span>
+	}
+
+	@GetMapping(&quot;/update/{id}&quot;)
+	public String showUpdateRuleForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+<span class="fc" id="L45">		Rule rule = ruleService.findById(id);</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">		if (rule == null) {</span>
+<span class="nc" id="L47">			throw new IllegalArgumentException(&quot;Invalid rule Id:&quot; + id);</span>
+		}
+<span class="fc" id="L49">		model.addAttribute(&quot;rule&quot;, rule);</span>
+<span class="fc" id="L50">		return &quot;rule/update&quot;;</span>
+	}
+
+	@PostMapping(&quot;/update/{id}&quot;)
+	public String updateRule(@PathVariable(&quot;id&quot;) Integer id, @Valid Rule rule, BindingResult result) {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc" id="L56">			rule.setId(id);</span>
+<span class="fc" id="L57">			return &quot;rule/update&quot;;</span>
+		}
+<span class="fc" id="L59">		ruleService.update(id, rule);</span>
+<span class="fc" id="L60">		return &quot;redirect:/rule/list&quot;;</span>
+	}
+
+	@GetMapping(&quot;/delete/{id}&quot;)
+	public String deleteRule(@PathVariable(&quot;id&quot;) Integer id) {
+<span class="fc" id="L65">		ruleService.deleteById(id);</span>
+<span class="fc" id="L66">		return &quot;redirect:/rule/list&quot;;</span>
+	}
+
+	@ModelAttribute(&quot;remoteUser&quot;)
+	public Object remoteUser(final HttpServletRequest httpServletRequest) {
+<span class="fc" id="L71">		return httpServletRequest.getRemoteUser();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

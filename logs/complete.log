@@ -1,0 +1,190 @@
+LogLevel: INFO  | Date: 2024-07-16 17:44:57 | From: Version                        | Message: HV000001: Hibernate Validator 8.0.1.Final
+LogLevel: INFO  | Date: 2024-07-16 17:44:57 | From: UserControllerTest             | Message: Starting UserControllerTest using Java 21.0.2 with PID 90850 (started by alicepogam in /Users/alicepogam/Documents/Formation OCR/F. Java/P7/Poseidon)
+LogLevel: INFO  | Date: 2024-07-16 17:44:57 | From: UserControllerTest             | Message: No active profile set, falling back to 1 default profile: "default"
+LogLevel: WARN  | Date: 2024-07-16 17:45:00 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 5c1bd126-1373-400f-91a3-c9ef17801260
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: INFO  | Date: 2024-07-16 17:45:00 | From: DefaultSecurityFilterChain     | Message: Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1923a29a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6dbf042, org.springframework.security.web.context.SecurityContextHolderFilter@ae094e8, org.springframework.security.web.header.HeaderWriterFilter@24bd88df, org.springframework.web.filter.CorsFilter@61c0a61, org.springframework.security.web.csrf.CsrfFilter@74faa12, org.springframework.security.web.authentication.logout.LogoutFilter@2e3ec0e9, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7a0ebd12, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@41576e84, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@66121af9, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@10d1f6da, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7a845f91, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4568ef38, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@62a153d3, org.springframework.security.web.access.ExceptionTranslationFilter@34692767, org.springframework.security.web.access.intercept.AuthorizationFilter@286cd3ad]
+LogLevel: INFO  | Date: 2024-07-16 17:45:00 | From: SpringBootMockServletContext   | Message: Initializing Spring TestDispatcherServlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:00 | From: TestDispatcherServlet          | Message: Initializing Servlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:00 | From: TestDispatcherServlet          | Message: Completed initialization in 1 ms
+LogLevel: INFO  | Date: 2024-07-16 17:45:00 | From: UserControllerTest             | Message: Started UserControllerTest in 3.324 seconds (process running for 4.798)
+LogLevel: INFO  | Date: 2024-07-16 17:45:00 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/user/add
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/user/delete/1
+LogLevel: ERROR | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: URL requested: POST http://localhost/user/validate?_csrf=DN03xpng2CNAZ0Eah2fEWV4Cfx1q4CKO71ld3qAtHF8g_O3iNbgD8qjS7RFtUycrt0rwaG41UnwIhBCj1m045pQaeG0VmYuD
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: URL requested: POST http://localhost/user/validate?_csrf=LH6DXBWVVRcZ9sZJsQ-89Qc_cw8z9CtRknER61-L5BvW5dQ7G0nnZCH3M3Q0laJ7gCKIwjZZXjdRkRt880J1jWm-1X3jhONZ
+LogLevel: ERROR | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: URL requested: POST http://localhost/user/update/1?_csrf=2bWnm0nLkeXJ_MCr1O-OAmIwrl1Ydre2hvy7Asqoai2VFOpI7tPBr3n8pIPkzaaf5sK6ZgAJg2Q8RY-b55qJYPieU0-kdt4p
+LogLevel: ERROR | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/user/list
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/user/update/1
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: AnnotationConfigContextLoaderUtils | Message: Could not detect default configuration classes for test class [com.poseidoncapitalsolution.trading.controller.BidControllerTest]: BidControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: SpringBootTestContextBootstrapper | Message: Found @SpringBootConfiguration com.poseidoncapitalsolution.trading.PoseidonTradingApplication for test class com.poseidoncapitalsolution.trading.controller.BidControllerTest
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: RestartApplicationListener     | Message: Restart disabled due to context in which it is running
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: BidControllerTest              | Message: Starting BidControllerTest using Java 21.0.2 with PID 90850 (started by alicepogam in /Users/alicepogam/Documents/Formation OCR/F. Java/P7/Poseidon)
+LogLevel: INFO  | Date: 2024-07-16 17:45:01 | From: BidControllerTest              | Message: No active profile set, falling back to 1 default profile: "default"
+LogLevel: WARN  | Date: 2024-07-16 17:45:02 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 3bff4f9a-a3c0-4ce5-8d82-7ceed3c0ffea
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: DefaultSecurityFilterChain     | Message: Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5fe74841, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@14c35a06, org.springframework.security.web.context.SecurityContextHolderFilter@4691b83d, org.springframework.security.web.header.HeaderWriterFilter@21eaf75b, org.springframework.web.filter.CorsFilter@3cb4e32b, org.springframework.security.web.csrf.CsrfFilter@66837d7b, org.springframework.security.web.authentication.logout.LogoutFilter@42e6cd6f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@47bdfc41, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@11084cb5, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@29866f6d, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@33c4dc6c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3b847d31, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@672e3f24, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4cc69f5c, org.springframework.security.web.access.ExceptionTranslationFilter@1ce803d6, org.springframework.security.web.access.intercept.AuthorizationFilter@7198edd]
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: SpringBootMockServletContext   | Message: Initializing Spring TestDispatcherServlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TestDispatcherServlet          | Message: Initializing Servlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TestDispatcherServlet          | Message: Completed initialization in 1 ms
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: BidControllerTest              | Message: Started BidControllerTest in 0.454 seconds (process running for 6.105)
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/bid/add
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/bid/update/1?_csrf=vbAkZlS2_jqnQms94NZLu8uanneGRCGGZPSRBRZ0YBwxFpzf2NUcXmfXyQiKe1pZ0Pt_ifupsxa2fUKrV8OmNyYXUS4CIf28
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/bid/update/1
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/bid/list
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/bid/update/1?_csrf=lmVBZmG7-8Jl0DR2JNZ3XViur3kaw1J3ezk3mj14o0M68LKF8gMnBVXanaRI4lBEQvtDO2-WgkF592ZaTAsHrwVMkCcPx4e3
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/bid/update/1?_csrf=kPaHpMH16r8-oHHkGmlZgZPNzEn5GJmwxY-jKxjcz2ysWHkx9pfkwvPA24sTlhCBfkRttqb-4XDNLf2d977BSijo_F2YbRwJ
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/bid/validate?_csrf=azbpBAXceSF2h-CRK5kyNgu8SyBHNuUjf2T3Esp14E_Fj1AJXg_YNTy4HUBbt9H3GrQGBTiNZkJwV9YOSFfGdq5Ngi2nvmM5
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/bid/validate?_csrf=mgv6E8aPt7vpmupKYiOwndlMrnJNTPd2Wv6cFjJeX66DXie_rDvMI6W5gorEq956AQ6Eqbp1g0ssfpZbPM6uJgVvbJfnbxSN
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: AnnotationConfigContextLoaderUtils | Message: Could not detect default configuration classes for test class [com.poseidoncapitalsolution.trading.controller.TradeControllerTest]: TradeControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: SpringBootTestContextBootstrapper | Message: Found @SpringBootConfiguration com.poseidoncapitalsolution.trading.PoseidonTradingApplication for test class com.poseidoncapitalsolution.trading.controller.TradeControllerTest
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RestartApplicationListener     | Message: Restart disabled due to context in which it is running
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TradeControllerTest            | Message: Starting TradeControllerTest using Java 21.0.2 with PID 90850 (started by alicepogam in /Users/alicepogam/Documents/Formation OCR/F. Java/P7/Poseidon)
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TradeControllerTest            | Message: No active profile set, falling back to 1 default profile: "default"
+LogLevel: WARN  | Date: 2024-07-16 17:45:02 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: faea21e9-483a-4cea-a234-e3cc2dd35ce9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: DefaultSecurityFilterChain     | Message: Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@49692c4f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@627695fd, org.springframework.security.web.context.SecurityContextHolderFilter@2506cf0d, org.springframework.security.web.header.HeaderWriterFilter@a8d8d41, org.springframework.web.filter.CorsFilter@516cb8e1, org.springframework.security.web.csrf.CsrfFilter@46e5c331, org.springframework.security.web.authentication.logout.LogoutFilter@6065f14f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4defc8ca, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@2da21a9b, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@2e617f42, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@24fb7b1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4d127cd7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4ba3612b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2eea3595, org.springframework.security.web.access.ExceptionTranslationFilter@4068dbed, org.springframework.security.web.access.intercept.AuthorizationFilter@d54cc0b]
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: SpringBootMockServletContext   | Message: Initializing Spring TestDispatcherServlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TestDispatcherServlet          | Message: Initializing Servlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TestDispatcherServlet          | Message: Completed initialization in 0 ms
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TradeControllerTest            | Message: Started TradeControllerTest in 0.239 seconds (process running for 6.496)
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/trade/validate?_csrf=aSyh79Y2O88lX7Wcfz77vBNDgfwwzagthg8UtQ4grKg8eXMjDEiXi-cDCqoIb4WoRhPP2HEmrJ4GrMoA4Dx2hW1FyMoKS0Ab
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/trade/validate?_csrf=FvBOld5AiBgTQ6TruWxl-WyWHnWSAEyhpi2mUZCo3WbJyrK1dZEtor8m6y8-epGKikFRzFSmMxejNn6MwhjCNfGZ616rroCE
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/trade/add
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/trade/update/1
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: GET http://localhost/trade/delete/1?_csrf=HWGb3v-FQvK1LzyeEyHocUa7hsD3fqgH98nIoLgFa1QAonb9fFOsv8fhdpeYS1_4JAzcQnKDq6GRTZwqxPr9loE2CjVjkUWe
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/trade/update/1?_csrf=IfN1YhLBGjRf5vR1Wc0s9p6iKG7MW3TSQY_XgMJptfE85HSpFJBMUHf3eQxygpIXbeAYlKbBBVapOkL_eL7j5KFe18Fa3EeZ
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/trade/list
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/trade/update/1?_csrf=1clQj5CKvZH_ACBdupoGNEhD_LHyRxrbfad0vu1w3-PZVNUG5PwxtvHr2KTSMRZujLcyUHsh0dPAIy32T8YV3d8T5tfqNuM3
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: AnnotationConfigContextLoaderUtils | Message: Could not detect default configuration classes for test class [com.poseidoncapitalsolution.trading.controller.RuleControllerTest]: RuleControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: SpringBootTestContextBootstrapper | Message: Found @SpringBootConfiguration com.poseidoncapitalsolution.trading.PoseidonTradingApplication for test class com.poseidoncapitalsolution.trading.controller.RuleControllerTest
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RestartApplicationListener     | Message: Restart disabled due to context in which it is running
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RuleControllerTest             | Message: Starting RuleControllerTest using Java 21.0.2 with PID 90850 (started by alicepogam in /Users/alicepogam/Documents/Formation OCR/F. Java/P7/Poseidon)
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RuleControllerTest             | Message: No active profile set, falling back to 1 default profile: "default"
+LogLevel: WARN  | Date: 2024-07-16 17:45:02 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 0f136d9a-b927-410f-ae29-fe0114a22c0a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: DefaultSecurityFilterChain     | Message: Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5bf54c2c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7d3abf88, org.springframework.security.web.context.SecurityContextHolderFilter@5b480f08, org.springframework.security.web.header.HeaderWriterFilter@5ea34883, org.springframework.web.filter.CorsFilter@ee49f34, org.springframework.security.web.csrf.CsrfFilter@501f317b, org.springframework.security.web.authentication.logout.LogoutFilter@45a07b97, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1d7dca19, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@7e8dca7, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@6e74986c, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@5bc776e2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@727569f3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@43cb630d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1f112da2, org.springframework.security.web.access.ExceptionTranslationFilter@316533b, org.springframework.security.web.access.intercept.AuthorizationFilter@1ca749cb]
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: SpringBootMockServletContext   | Message: Initializing Spring TestDispatcherServlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TestDispatcherServlet          | Message: Initializing Servlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: TestDispatcherServlet          | Message: Completed initialization in 0 ms
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RuleControllerTest             | Message: Started RuleControllerTest in 0.232 seconds (process running for 6.856)
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/rule/update/1
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/rule/list
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/rule/delete/1
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/rule/update/1?_csrf=JciU9ssaW4CZ1iK04r1C-IdtAz47c-1LIdceAvAke-qViV9nHKmix_57arO05EeGg5B2mbVfLl8IQI9mFeQtY8MUGt3262xQ
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/rule/update/1?_csrf=DlgY70Gpd0W-54Paa3F5W9mBmTD4618QvJW9PbMP7d2LL78faj57i3nLFnaTguXtCFxNOerktAnAiGg9jqPcXtU8jOruGt1-
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/rule/add?_csrf=Nqch0gwFALAtkZd1Ei3GRCIh7zta-WpyLryrLUx8KlsOJJTSV8MV5jpnNdUAqfFHcADydhEUwgNqwFpfSo2cHnsfEzo8RaPi
+LogLevel: ERROR | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/rule/add
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: URL requested: POST http://localhost/rule/add?_csrf=7eObwoYaUlEuSuDRLMQNGVoYnzOJSTdFgMRrLc1wNkQqbs_PjtX49eV8YjcDf9G3Huk5fDkqsgu6cA5o4_BTGPtBD3IaXa2t
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: AnnotationConfigContextLoaderUtils | Message: Could not detect default configuration classes for test class [com.poseidoncapitalsolution.trading.controller.RatingControllerTest]: RatingControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: SpringBootTestContextBootstrapper | Message: Found @SpringBootConfiguration com.poseidoncapitalsolution.trading.PoseidonTradingApplication for test class com.poseidoncapitalsolution.trading.controller.RatingControllerTest
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RestartApplicationListener     | Message: Restart disabled due to context in which it is running
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RatingControllerTest           | Message: Starting RatingControllerTest using Java 21.0.2 with PID 90850 (started by alicepogam in /Users/alicepogam/Documents/Formation OCR/F. Java/P7/Poseidon)
+LogLevel: INFO  | Date: 2024-07-16 17:45:02 | From: RatingControllerTest           | Message: No active profile set, falling back to 1 default profile: "default"
+LogLevel: WARN  | Date: 2024-07-16 17:45:03 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: ce46b94f-d199-4fbf-89fe-56b89673b878
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: DefaultSecurityFilterChain     | Message: Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@82cd68d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@31102e84, org.springframework.security.web.context.SecurityContextHolderFilter@1d1b458e, org.springframework.security.web.header.HeaderWriterFilter@56c73551, org.springframework.web.filter.CorsFilter@729bdd9d, org.springframework.security.web.csrf.CsrfFilter@4c3df4aa, org.springframework.security.web.authentication.logout.LogoutFilter@57dcf976, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@47209d16, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@2d607072, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@3b8bb9a0, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7787cbcd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3e207a23, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4262a8d2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@55fd98e2, org.springframework.security.web.access.ExceptionTranslationFilter@5ce40b4e, org.springframework.security.web.access.intercept.AuthorizationFilter@2e62ece0]
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: SpringBootMockServletContext   | Message: Initializing Spring TestDispatcherServlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: TestDispatcherServlet          | Message: Initializing Servlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: TestDispatcherServlet          | Message: Completed initialization in 1 ms
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: RatingControllerTest           | Message: Started RatingControllerTest in 0.208 seconds (process running for 7.184)
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/rating/validate?_csrf=OGpVYcVtiYoXzNkEaGB8ukQmkGF_fZwgqTFreyDbTX57HTa9WQ8xAKFVvu46qLo9Wk1IiHESvQNGSakNylVaThPrLxhCKQKE
+LogLevel: ERROR | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: GET http://localhost/rating/delete/1?_csrf=reuHMRbj42MoSQzgKXrxT6d_IDURTHPQmYz0joCpuN2-IPwXzN62ACDa1AcFfjrVGVfFeJIaDVd3ekT9q73D7LfLjr-GFMQi
+LogLevel: ERROR | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/rating/update/1
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/rating/add
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/rating/list
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/rating/update/1?_csrf=lagD1o4fMgjA2zlitxN4jO8OoxAINCFs0Hcm3PXOcKqMz5dfoctn4L15Cz3t6V9Vjj5MtIk6jig-AxhB5RYW7cT_QZrv_K9s
+LogLevel: ERROR | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/rating/update/1?_csrf=fUYPsGubb08qZWX6Ae42RahZ3SPNQLp7mEuIBBSUDWGOyv3_GHI5gVKpWHsHXADDNMMCcp078Br7dYNWqHy7YHbwb1C3r8zH
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/rating/validate?_csrf=vxs3xWjbmmnK_pNX9OjRyHZBBSy2uLfKJYsRl2UgueCbSDZe2nhV81u_-1_nmvdlwsXl-EEiKBTV2oTnQLwl81IZj9KscAJs
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: AnnotationConfigContextLoaderUtils | Message: Could not detect default configuration classes for test class [com.poseidoncapitalsolution.trading.controller.CurvePointControllerTest]: CurvePointControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: SpringBootTestContextBootstrapper | Message: Found @SpringBootConfiguration com.poseidoncapitalsolution.trading.PoseidonTradingApplication for test class com.poseidoncapitalsolution.trading.controller.CurvePointControllerTest
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: RestartApplicationListener     | Message: Restart disabled due to context in which it is running
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: CurvePointControllerTest       | Message: Starting CurvePointControllerTest using Java 21.0.2 with PID 90850 (started by alicepogam in /Users/alicepogam/Documents/Formation OCR/F. Java/P7/Poseidon)
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: CurvePointControllerTest       | Message: No active profile set, falling back to 1 default profile: "default"
+LogLevel: WARN  | Date: 2024-07-16 17:45:03 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 19138a3a-c721-47c2-8eed-6364d5f6d32e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: DefaultSecurityFilterChain     | Message: Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5a0ec14d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@72690306, org.springframework.security.web.context.SecurityContextHolderFilter@583916d3, org.springframework.security.web.header.HeaderWriterFilter@7371f9b7, org.springframework.web.filter.CorsFilter@10235312, org.springframework.security.web.csrf.CsrfFilter@1c219552, org.springframework.security.web.authentication.logout.LogoutFilter@c139ed3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2a590e2f, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@40eeb885, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4d97c8d7, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3a2cf8b1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@48a28383, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3cae42e6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@61bf6c81, org.springframework.security.web.access.ExceptionTranslationFilter@21baa851, org.springframework.security.web.access.intercept.AuthorizationFilter@777be68c]
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: SpringBootMockServletContext   | Message: Initializing Spring TestDispatcherServlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: TestDispatcherServlet          | Message: Initializing Servlet ''
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: TestDispatcherServlet          | Message: Completed initialization in 0 ms
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: CurvePointControllerTest       | Message: Started CurvePointControllerTest in 0.192 seconds (process running for 7.48)
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/curvePoint/list
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/curvePoint/add
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/curvePoint/update/1
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/curvePoint/update/1?_csrf=czQAd_nPRbX8TKE-Vccv0Ig2N3Hk4UhDypq6Ms6VKiiD1GT4FQQ4R86uIYDRe5ZcN-ob5ulVGkjS1ilu8vuCUfb2GU7l41HJ
+LogLevel: ERROR | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/curvePoint/findByCurveId/1
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/curvePoint/validate?_csrf=H9jva9wjUeK7DP6TE0ewWQuQzufG9LW67Lr6WSLnfD8yRrn4L-HbW74TaYCWNZijdmqEOjmo44aiwYeX3IicahbfTAoLc4nN
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/curvePoint/update/1?_csrf=kF7P3aFYMI5CFTu9nIQJfyJlkwYIl_YIXuiNfFcvSU9nAcEOoj_27ZFsVOxvJ1re-Kk9TxJRvj9r8c4lP9_oSDVNfSkGOfU8
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Response: Status 200 OK
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Endpoint requested: GET http://localhost/curvePoint/delete/1
+LogLevel: ERROR | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Status unknown
+LogLevel: INFO  | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: URL requested: POST http://localhost/curvePoint/validate?_csrf=M_PQV_uwb4V8iTa_lUSw7D85_qBkID_1SonIc5G8mPaGLleQAMPkZpmIWrxR6leG8WmE3loM05lRFQrYee_9FvWNqZO1Hm6k
+LogLevel: ERROR | Date: 2024-07-16 17:45:03 | From: EndpointListener               | Message: Status unknown

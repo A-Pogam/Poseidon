@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseidon-trading-application</a> &gt; <a href="index.source.html" class="el_package">com.poseidoncapitalsolution.trading.service</a> &gt; <span class="el_source">BidService.java</span></div><h1>BidService.java</h1><pre class="source lang-java linenums">package com.poseidoncapitalsolution.trading.service;
+
+import com.poseidoncapitalsolution.trading.model.Bid;
+import com.poseidoncapitalsolution.trading.repository.contracts.BidRepository;
+import com.poseidoncapitalsolution.trading.service.contracts.IBidService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Service class implementing the {@link IBidService} interface to provide business logic for managing Bid entities.
+ * &lt;p&gt;
+ * This class interacts with the data layer via the {@link BidRepository} to perform CRUD operations.
+ * &lt;/p&gt;
+ *
+ * @author Alice Pogam
+ * @version 1.0
+ */
+@Service
+<span class="nc" id="L23">public class BidService implements IBidService {</span>
+
+	@Autowired
+	private BidRepository bidRepository;
+
+	/**
+	 * Retrieves all Bid entities from the database.
+	 * &lt;p&gt;
+	 * If no bids are found, returns an empty list.
+	 * &lt;/p&gt;
+	 *
+	 * @return a list of all bids or an empty list if no bids are found.
+	 */
+	@Override
+	public List&lt;Bid&gt; findAll() {
+<span class="nc" id="L38">		List&lt;Bid&gt; bids = bidRepository.findAll();</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">		return (bids != null) ? bids : new ArrayList&lt;&gt;();</span>
+	}
+
+	/**
+	 * Saves a new Bid entity to the database or updates an existing one.
+	 * &lt;p&gt;
+	 * If the bid already exists (has a non-null ID), it updates the existing record; otherwise, it creates a new one.
+	 * &lt;/p&gt;
+	 *
+	 * @param bid the Bid entity to be saved or updated.
+	 */
+	@Override
+	public void save(Bid bid) {
+<span class="nc" id="L52">		bidRepository.save(bid);</span>
+<span class="nc" id="L53">	}</span>
+
+	/**
+	 * Retrieves a specific Bid by its unique identifier.
+	 * &lt;p&gt;
+	 * If no bid is found with the given ID, returns null.
+	 * &lt;/p&gt;
+	 *
+	 * @param id the unique identifier of the bid.
+	 * @return the Bid entity if found, otherwise null.
+	 */
+	@Override
+	public Bid findById(Integer id) {
+<span class="nc" id="L66">		Optional&lt;Bid&gt; optionalBid = bidRepository.findById(id);</span>
+<span class="nc" id="L67">		return optionalBid.orElse(null);</span>
+	}
+
+	/**
+	 * Updates an existing Bid entity identified by its ID.
+	 * &lt;p&gt;
+	 * This method sets the ID of the provided Bid entity to the given ID and then saves it, effectively updating the record.
+	 * &lt;/p&gt;
+	 *
+	 * @param id the unique identifier of the bid to be updated.
+	 * @param bid the Bid entity with updated information.
+	 */
+	@Override
+	public void update(Integer id, Bid bid) {
+<span class="nc" id="L81">		bid.setBidListId(id);</span>
+<span class="nc" id="L82">		bidRepository.save(bid);</span>
+<span class="nc" id="L83">	}</span>
+
+	/**
+	 * Deletes a Bid entity by its unique identifier.
+	 *
+	 * @param id the unique identifier of the bid to be deleted.
+	 */
+	@Override
+	public void deleteById(Integer id) {
+<span class="nc" id="L92">		bidRepository.deleteById(id);</span>
+<span class="nc" id="L93">	}</span>
+
+	/**
+	 * Resets the Bid table to its initial state.
+	 * &lt;p&gt;
+	 * This method is typically used to clear or reset the table for testing purposes.
+	 * &lt;/p&gt;
+	 */
+	@Override
+	public void resetBidTestTable() {
+<span class="nc" id="L103">		bidRepository.resetBidTestTable();</span>
+<span class="nc" id="L104">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseidon-trading-application</a> &gt; <a href="index.source.html" class="el_package">com.poseidoncapitalsolution.trading.controller</a> &gt; <span class="el_source">HomeController.java</span></div><h1>HomeController.java</h1><pre class="source lang-java linenums">package com.poseidoncapitalsolution.trading.controller;
+
+import com.poseidoncapitalsolution.trading.model.User;
+import com.poseidoncapitalsolution.trading.service.contracts.IUserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+<span class="nc" id="L18">public class HomeController {</span>
+
+<span class="nc" id="L20">	private final Logger logger = LogManager.getLogger(HomeController.class);</span>
+
+	@Autowired
+	private IUserService userService;
+
+	@GetMapping(&quot;/home&quot;)
+	public String home(Model model) {
+<span class="nc" id="L27">		logger.info(&quot;Received request to access home page.&quot;);</span>
+
+<span class="nc" id="L29">		String username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();</span>
+<span class="nc" id="L30">		User user = userService.findByUsername(username).orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+
+<span class="nc" id="L32">		model.addAttribute(&quot;user&quot;, user);</span>
+
+<span class="nc" id="L34">		return &quot;home&quot;;</span>
+	}
+
+	@ModelAttribute(&quot;remoteUser&quot;)
+	public Object remoteUser(final HttpServletRequest httpServletRequest) {
+<span class="nc" id="L39">		return httpServletRequest.getRemoteUser();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

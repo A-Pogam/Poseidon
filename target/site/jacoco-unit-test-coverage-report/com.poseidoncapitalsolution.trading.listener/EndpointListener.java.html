@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EndpointListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseidon-trading-application</a> &gt; <a href="index.source.html" class="el_package">com.poseidoncapitalsolution.trading.listener</a> &gt; <span class="el_source">EndpointListener.java</span></div><h1>EndpointListener.java</h1><pre class="source lang-java linenums">package com.poseidoncapitalsolution.trading.listener;
+
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+/**
+ * Interceptor for logging HTTP requests and responses.
+ * This class implements {@link HandlerInterceptor} to provide custom pre-handle and after-completion logic
+ * for logging information about incoming HTTP requests and outgoing HTTP responses.
+ */
+<span class="fc" id="L18">public class EndpointListener implements HandlerInterceptor {</span>
+
+<span class="fc" id="L20">	private static final Logger logger = LoggerFactory.getLogger(EndpointListener.class);</span>
+
+	/**
+	 * Pre-handle method to log details about the incoming HTTP request.
+	 * This method logs the HTTP method, URL, and any request parameters.
+	 *
+	 * @param request the {@link HttpServletRequest} object
+	 * @param response the {@link HttpServletResponse} object
+	 * @param handler the handler (or {@link HandlerInterceptor}) that is being called
+	 * @return {@code true} to continue processing the request, {@code false} to halt the processing
+	 * @throws Exception in case of any errors during request handling
+	 */
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+<span class="fc" id="L35">		String requestURL = java.net.URLDecoder.decode(request.getRequestURL().toString(), StandardCharsets.UTF_8);</span>
+
+<span class="fc bfc" id="L37" title="All 2 branches covered.">		if (!request.getParameterMap().isEmpty()) {</span>
+<span class="fc" id="L38">			String requestParameters = &quot;?&quot; + request.getParameterMap().entrySet().stream().map(e -&gt; e.getKey() + &quot;=&quot; + String.join(&quot;, &quot;, e.getValue())).collect(Collectors.joining(&quot; &quot;));</span>
+<span class="fc" id="L39">			logger.info(&quot;URL requested: {} {}{}&quot;, request.getMethod(), requestURL, requestParameters);</span>
+<span class="fc" id="L40">		} else {</span>
+<span class="fc" id="L41">			logger.info(&quot;Endpoint requested: {} {}&quot;, request.getMethod(), requestURL);</span>
+		}
+
+<span class="fc" id="L44">		return true;</span>
+	}
+
+	/**
+	 * After-completion method to log details about the outgoing HTTP response.
+	 * This method logs the response status and additional details based on the status code.
+	 *
+	 * @param request the {@link HttpServletRequest} object
+	 * @param response the {@link HttpServletResponse} object
+	 * @param handler the handler (or {@link HandlerInterceptor}) that was executed
+	 * @param exception any exception thrown on handler execution, if any
+	 * @throws Exception in case of any errors during response handling
+	 */
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) throws Exception {
+<span class="fc" id="L59">		int responseStatus = response.getStatus();</span>
+
+<span class="pc bpc" id="L61" title="5 of 7 branches missed.">		switch (responseStatus) {</span>
+		case 200:
+<span class="fc" id="L63">			logger.info(&quot;Response: Status {} OK&quot;, responseStatus);</span>
+<span class="fc" id="L64">			break;</span>
+		case 201:
+<span class="nc" id="L66">			String responseLocation = java.net.URLDecoder.decode(response.getHeader(&quot;Location&quot;), StandardCharsets.UTF_8);</span>
+<span class="nc" id="L67">			logger.info(&quot;Response: Status {} Created - Location : {}&quot;, responseStatus, responseLocation);</span>
+<span class="nc" id="L68">			break;</span>
+		case 204:
+<span class="nc" id="L70">			logger.info(&quot;Response: Status {} No Content.&quot;, responseStatus);</span>
+<span class="nc" id="L71">			break;</span>
+		case 400:
+<span class="nc" id="L73">			logger.error(&quot;Response: Status {} Bad Request.&quot;, responseStatus);</span>
+<span class="nc" id="L74">			break;</span>
+		case 404:
+<span class="nc" id="L76">			logger.error(&quot;Response: Status {} Not Found.&quot;, responseStatus);</span>
+<span class="nc" id="L77">			break;</span>
+		case 500:
+<span class="nc" id="L79">			logger.error(&quot;Response: Status {} Internal Server Error.&quot;, responseStatus);</span>
+<span class="nc" id="L80">			break;</span>
+		default:
+<span class="fc" id="L82">			logger.error(&quot;Status unknown&quot;);</span>
+		}
+<span class="fc" id="L84">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Bid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseidon-trading-application</a> &gt; <a href="index.source.html" class="el_package">com.poseidoncapitalsolution.trading.model</a> &gt; <span class="el_source">Bid.java</span></div><h1>Bid.java</h1><pre class="source lang-java linenums">package com.poseidoncapitalsolution.trading.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+
+import java.sql.Timestamp;
+
+/**
+ * Represents a bid in the trading system.
+ *
+ * &lt;p&gt;
+ * This entity is used to store information related to bids, including bid and ask quantities,
+ * associated accounts, and various other metadata.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * The class is mapped to the &quot;bid&quot; table in the database using JPA annotations.
+ * &lt;/p&gt;
+ *
+ * @author Alice Pogam
+ * @version 1.0
+ */
+
+@Entity
+@Table(name = &quot;bid&quot;)
+public class Bid {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer bidListId;
+
+    @NotBlank(message = &quot;Account is mandatory&quot;)
+    private String account;
+
+    @NotBlank(message = &quot;Type is mandatory&quot;)
+    private String type;
+
+    @NotNull(message = &quot;Bid quantity is mandatory&quot;)
+    private Double bidQuantity;
+
+    private Double askQuantity;
+
+    private Double bid;
+
+    private Double ask;
+
+    private String benchmark;
+
+    private Timestamp bidListDate;
+
+    private String commentary;
+
+    private String security;
+
+    private String status;
+
+    private String trader;
+
+    private String book;
+
+    private String creationName;
+
+    private Timestamp creationDate;
+
+    private String revisionName;
+
+    private Timestamp revisionDate;
+
+    private String dealName;
+
+    private String dealType;
+
+    private String sourceListId;
+
+    private String side;
+
+
+    /**
+     * Constructs a new Bid object with specified parameters.
+     *
+     * @param bidListId   the unique identifier for the bid
+     * @param account     the account associated with the bid
+     * @param type        the type of bid
+     * @param bidQuantity the quantity of the bid
+     */
+<span class="fc" id="L92">    public Bid(Integer bidListId, String account, String type, Double bidQuantity) {</span>
+<span class="fc" id="L93">        this.bidListId = bidListId;</span>
+<span class="fc" id="L94">        this.account = account;</span>
+<span class="fc" id="L95">        this.type = type;</span>
+<span class="fc" id="L96">        this.bidQuantity = bidQuantity;</span>
+<span class="fc" id="L97">    }</span>
+
+<span class="fc" id="L99">    public Bid() {}</span>
+
+
+
+    public Integer getBidListId() {
+<span class="fc" id="L104">        return bidListId;</span>
+    }
+
+    public void setBidListId(Integer bidListId) {
+<span class="nc" id="L108">        this.bidListId = bidListId;</span>
+<span class="nc" id="L109">    }</span>
+
+    public String getAccount() {
+<span class="fc" id="L112">        return account;</span>
+    }
+
+    public void setAccount(String account) {
+<span class="nc" id="L116">        this.account = account;</span>
+<span class="nc" id="L117">    }</span>
+
+    public String getType() {
+<span class="fc" id="L120">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="nc" id="L124">        this.type = type;</span>
+<span class="nc" id="L125">    }</span>
+
+    public Double getBidQuantity() {
+<span class="fc" id="L128">        return bidQuantity;</span>
+    }
+
+    public void setBidQuantity(Double bidQuantity) {
+<span class="nc" id="L132">        this.bidQuantity = bidQuantity;</span>
+<span class="nc" id="L133">    }</span>
+
+    public Double getAskQuantity() {
+<span class="nc" id="L136">        return askQuantity;</span>
+    }
+
+    public void setAskQuantity(Double askQuantity) {
+<span class="nc" id="L140">        this.askQuantity = askQuantity;</span>
+<span class="nc" id="L141">    }</span>
+
+    public Double getBid() {
+<span class="nc" id="L144">        return bid;</span>
+    }
+
+    public void setBid(Double bid) {
+<span class="nc" id="L148">        this.bid = bid;</span>
+<span class="nc" id="L149">    }</span>
+
+    public Double getAsk() {
+<span class="nc" id="L152">        return ask;</span>
+    }
+
+    public void setAsk(Double ask) {
+<span class="nc" id="L156">        this.ask = ask;</span>
+<span class="nc" id="L157">    }</span>
+
+    public String getBenchmark() {
+<span class="nc" id="L160">        return benchmark;</span>
+    }
+
+    public void setBenchmark(String benchmark) {
+<span class="nc" id="L164">        this.benchmark = benchmark;</span>
+<span class="nc" id="L165">    }</span>
+
+    public Timestamp getBidListDate() {
+<span class="nc" id="L168">        return bidListDate;</span>
+    }
+
+    public void setBidListDate(Timestamp bidListDate) {
+<span class="nc" id="L172">        this.bidListDate = bidListDate;</span>
+<span class="nc" id="L173">    }</span>
+
+    public String getCommentary() {
+<span class="nc" id="L176">        return commentary;</span>
+    }
+
+    public void setCommentary(String commentary) {
+<span class="nc" id="L180">        this.commentary = commentary;</span>
+<span class="nc" id="L181">    }</span>
+
+    public String getSecurity() {
+<span class="nc" id="L184">        return security;</span>
+    }
+
+    public void setSecurity(String security) {
+<span class="nc" id="L188">        this.security = security;</span>
+<span class="nc" id="L189">    }</span>
+
+    public String getStatus() {
+<span class="nc" id="L192">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="nc" id="L196">        this.status = status;</span>
+<span class="nc" id="L197">    }</span>
+
+    public String getTrader() {
+<span class="nc" id="L200">        return trader;</span>
+    }
+
+    public void setTrader(String trader) {
+<span class="nc" id="L204">        this.trader = trader;</span>
+<span class="nc" id="L205">    }</span>
+
+    public String getBook() {
+<span class="nc" id="L208">        return book;</span>
+    }
+
+    public void setBook(String book) {
+<span class="nc" id="L212">        this.book = book;</span>
+<span class="nc" id="L213">    }</span>
+
+    public String getCreationName() {
+<span class="nc" id="L216">        return creationName;</span>
+    }
+
+    public void setCreationName(String creationName) {
+<span class="nc" id="L220">        this.creationName = creationName;</span>
+<span class="nc" id="L221">    }</span>
+
+    public Timestamp getCreationDate() {
+<span class="nc" id="L224">        return creationDate;</span>
+    }
+
+    public void setCreationDate(Timestamp creationDate) {
+<span class="nc" id="L228">        this.creationDate = creationDate;</span>
+<span class="nc" id="L229">    }</span>
+
+    public String getRevisionName() {
+<span class="nc" id="L232">        return revisionName;</span>
+    }
+
+    public void setRevisionName(String revisionName) {
+<span class="nc" id="L236">        this.revisionName = revisionName;</span>
+<span class="nc" id="L237">    }</span>
+
+    public Timestamp getRevisionDate() {
+<span class="nc" id="L240">        return revisionDate;</span>
+    }
+
+    public void setRevisionDate(Timestamp revisionDate) {
+<span class="nc" id="L244">        this.revisionDate = revisionDate;</span>
+<span class="nc" id="L245">    }</span>
+
+    public String getDealName() {
+<span class="nc" id="L248">        return dealName;</span>
+    }
+
+    public void setDealName(String dealName) {
+<span class="nc" id="L252">        this.dealName = dealName;</span>
+<span class="nc" id="L253">    }</span>
+
+    public String getDealType() {
+<span class="nc" id="L256">        return dealType;</span>
+    }
+
+    public void setDealType(String dealType) {
+<span class="nc" id="L260">        this.dealType = dealType;</span>
+<span class="nc" id="L261">    }</span>
+
+    public String getSourceListId() {
+<span class="nc" id="L264">        return sourceListId;</span>
+    }
+
+    public void setSourceListId(String sourceListId) {
+<span class="nc" id="L268">        this.sourceListId = sourceListId;</span>
+<span class="nc" id="L269">    }</span>
+
+    public String getSide() {
+<span class="nc" id="L272">        return side;</span>
+    }
+
+    public void setSide(String side) {
+<span class="nc" id="L276">        this.side = side;</span>
+<span class="nc" id="L277">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

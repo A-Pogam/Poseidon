@@ -1,0 +1,12 @@
+com/poseidoncapitalsolution/trading/service/CurvePointServiceIT.class
+com/poseidoncapitalsolution/trading/service/UserServiceIT.class
+com/poseidoncapitalsolution/trading/controller/RatingControllerTest.class
+com/poseidoncapitalsolution/trading/controller/TradeControllerTest.class
+com/poseidoncapitalsolution/trading/controller/RuleControllerTest.class
+com/poseidoncapitalsolution/trading/service/RatingServiceIT.class
+com/poseidoncapitalsolution/trading/controller/UserControllerTest.class
+com/poseidoncapitalsolution/trading/controller/CurvePointControllerTest.class
+com/poseidoncapitalsolution/trading/service/RuleServiceIT.class
+com/poseidoncapitalsolution/trading/service/BidServiceIT.class
+com/poseidoncapitalsolution/trading/controller/BidControllerTest.class
+com/poseidoncapitalsolution/trading/service/TradeServiceIT.class

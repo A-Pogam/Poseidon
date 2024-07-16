@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpringSecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseidon-trading-application</a> &gt; <a href="index.source.html" class="el_package">com.poseidoncapitalsolution.trading.config</a> &gt; <span class="el_source">SpringSecurityConfig.java</span></div><h1>SpringSecurityConfig.java</h1><pre class="source lang-java linenums">package com.poseidoncapitalsolution.trading.config;
+
+import com.poseidoncapitalsolution.trading.service.UserDetailsServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+
+/**
+ * Configuration class for Spring Security.
+ *
+ * &lt;p&gt;
+ * This class configures the security settings for the application using Spring Security.
+ * It defines beans for the user details service, password encoder, and authentication provider.
+ * Additionally, it configures HTTP security settings including URL patterns, access rules,
+ * form login, logout behavior, and authentication providers.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * The class is annotated with {@link Configuration} to indicate that it provides Spring configuration.
+ * {@link EnableWebSecurity} enables Spring Security's web security support.
+ * &lt;/p&gt;
+ *
+ * @author Alice Pogam
+ * @version 1.0
+ */
+@Configuration
+@EnableWebSecurity
+<span class="nc" id="L34">public class SpringSecurityConfig {</span>
+
+    /**
+     * Provides the user details service implementation.
+     *
+     * @return an instance of {@link UserDetailsServiceImpl}
+     */
+    @Bean
+    public UserDetailsServiceImpl userDetailsService() {
+<span class="nc" id="L43">        return new UserDetailsServiceImpl();</span>
+    }
+
+    /**
+     * Provides the BCrypt password encoder.
+     *
+     * @return an instance of {@link BCryptPasswordEncoder}
+     */
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+<span class="nc" id="L53">        return new BCryptPasswordEncoder();</span>
+    }
+
+    /**
+     * Configures the DAO authentication provider with the user details service and password encoder.
+     *
+     * @param userDetailsService the user details service implementation
+     * @param passwordEncoder the BCrypt password encoder
+     * @return an instance of {@link DaoAuthenticationProvider}
+     */
+    @Bean
+    public DaoAuthenticationProvider daoAuthProvider(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder passwordEncoder) {
+<span class="nc" id="L65">        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();</span>
+<span class="nc" id="L66">        daoAuthenticationProvider.setUserDetailsService(userDetailsService);</span>
+<span class="nc" id="L67">        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);</span>
+<span class="nc" id="L68">        return daoAuthenticationProvider;</span>
+    }
+
+    /**
+     * Provides a builder for MVC request matchers.
+     *
+     * @param handlerMappingIntrospector the handler mapping introspector
+     * @return a builder for {@link MvcRequestMatcher}
+     */
+    @Bean
+    MvcRequestMatcher.Builder requestMatcher(HandlerMappingIntrospector handlerMappingIntrospector) {
+<span class="nc" id="L79">        return new MvcRequestMatcher.Builder(handlerMappingIntrospector);</span>
+    }
+
+    /**
+     * Configures the security filter chain with HTTP security settings.
+     *
+     * @param httpSecurity the HTTP security object to configure
+     * @param daoAuthProvider the DAO authentication provider
+     * @param mvcRequestMatcher the MVC request matcher builder
+     * @return a {@link SecurityFilterChain} instance
+     * @throws Exception if an error occurs during configuration
+     */
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, DaoAuthenticationProvider daoAuthProvider, MvcRequestMatcher.Builder mvcRequestMatcher) throws Exception {
+<span class="nc" id="L93">        return httpSecurity</span>
+<span class="nc" id="L94">                .authorizeHttpRequests(auth -&gt; auth</span>
+<span class="nc" id="L95">                        .requestMatchers(mvcRequestMatcher.pattern(&quot;/css/**&quot;)).permitAll()</span>
+<span class="nc" id="L96">                        .requestMatchers(mvcRequestMatcher.pattern(&quot;/user/**&quot;)).hasRole(&quot;ADMIN&quot;)</span>
+<span class="nc" id="L97">                        .anyRequest().authenticated()</span>
+                )
+<span class="nc" id="L99">                .formLogin(formLogin -&gt; formLogin</span>
+<span class="nc" id="L100">                        .defaultSuccessUrl(&quot;/bid/list&quot;)</span>
+<span class="nc" id="L101">                        .permitAll()</span>
+                )
+<span class="nc" id="L103">                .logout(logout -&gt; logout</span>
+<span class="nc" id="L104">                        .logoutUrl(&quot;/app-logout&quot;)</span>
+                )
+<span class="nc" id="L106">                .authenticationProvider(daoAuthProvider)</span>
+<span class="nc" id="L107">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

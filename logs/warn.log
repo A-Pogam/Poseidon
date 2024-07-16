@@ -1,0 +1,36 @@
+LogLevel: WARN  | Date: 2024-07-16 17:45:00 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 5c1bd126-1373-400f-91a3-c9ef17801260
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: WARN  | Date: 2024-07-16 17:45:02 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 3bff4f9a-a3c0-4ce5-8d82-7ceed3c0ffea
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: WARN  | Date: 2024-07-16 17:45:02 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: faea21e9-483a-4cea-a234-e3cc2dd35ce9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: WARN  | Date: 2024-07-16 17:45:02 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 0f136d9a-b927-410f-ae29-fe0114a22c0a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: WARN  | Date: 2024-07-16 17:45:03 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: ce46b94f-d199-4fbf-89fe-56b89673b878
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+LogLevel: WARN  | Date: 2024-07-16 17:45:03 | From: UserDetailsServiceAutoConfiguration | Message: 
+
+Using generated security password: 19138a3a-c721-47c2-8eed-6364d5f6d32e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+

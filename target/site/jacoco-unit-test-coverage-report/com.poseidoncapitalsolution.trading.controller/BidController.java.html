@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseidon-trading-application</a> &gt; <a href="index.source.html" class="el_package">com.poseidoncapitalsolution.trading.controller</a> &gt; <span class="el_source">BidController.java</span></div><h1>BidController.java</h1><pre class="source lang-java linenums">package com.poseidoncapitalsolution.trading.controller;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import com.poseidoncapitalsolution.trading.model.Bid;
+import com.poseidoncapitalsolution.trading.service.contracts.IBidService;
+
+import jakarta.validation.Valid;
+
+/**
+ * Controller handling requests related to the {@link Bid} entity.
+ * &lt;p&gt;
+ * This controller provides endpoints for listing, adding, updating, and deleting bids.
+ * It uses {@link IBidService} to execute the business logic and interacts with the view layer
+ * to render appropriate responses.
+ * &lt;/p&gt;
+ *
+ * @author Alice Pogam
+ * @version 1.0
+ */
+@Controller
+<span class="fc" id="L29">public class BidController {</span>
+
+<span class="fc" id="L31">	private final Logger logger = LogManager.getLogger(HomeController.class);</span>
+
+	@Autowired
+	private IBidService bidService;
+
+	/**
+	 * Retrieves a list of all bids and forwards to the bids list view.
+	 *
+	 * @param model the model to add attributes for the view
+	 * @return the view name for listing bids
+	 */
+	@GetMapping(&quot;/bid/list&quot;)
+	public String getList(Model model) {
+<span class="fc" id="L44">		model.addAttribute(&quot;bids&quot;, bidService.findAll());</span>
+<span class="fc" id="L45">		return &quot;bid/list&quot;;</span>
+	}
+
+	/**
+	 * Retrieves the form for adding a new bid.
+	 *
+	 * @param bid the Bid object to be populated in the form
+	 * @return the view name for the add bid form
+	 */
+	@GetMapping(&quot;/bid/add&quot;)
+	public String getAddForm(Bid bid) {
+<span class="fc" id="L56">		return &quot;bid/add&quot;;</span>
+	}
+
+	/**
+	 * Validates and saves a new bid.
+	 *
+	 * @param bid    the Bid object to be validated and saved
+	 * @param result the binding result object to hold validation errors
+	 * @return the view name for adding a bid or redirects to the bid list view if successful
+	 */
+	@PostMapping(&quot;/bid/validate&quot;)
+	public String addBid(@Valid Bid bid, BindingResult result) {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc" id="L69">			return &quot;bid/add&quot;;</span>
+		}
+<span class="fc" id="L71">		bidService.save(bid);</span>
+<span class="fc" id="L72">		return &quot;redirect:/bid/list&quot;;</span>
+	}
+
+	/**
+	 * Retrieves the form for updating an existing bid by its ID.
+	 *
+	 * @param id    the ID of the bid to be updated
+	 * @param model the model to add attributes for the view
+	 * @return the view name for the update bid form or throws an exception if the bid ID is invalid
+	 */
+	@GetMapping(&quot;/bid/update/{id}&quot;)
+	public String getUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+<span class="fc" id="L84">		Bid bid = bidService.findById(id);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (bid == null) {</span>
+<span class="nc" id="L86">			throw new IllegalArgumentException(&quot;Invalid bid Id: &quot; + id);</span>
+		}
+<span class="fc" id="L88">		model.addAttribute(&quot;bid&quot;, bid);</span>
+<span class="fc" id="L89">		return &quot;bid/update&quot;;</span>
+	}
+
+	/**
+	 * Validates and updates an existing bid by its ID.
+	 *
+	 * @param id     the ID of the bid to be updated
+	 * @param bid    the Bid object with updated information
+	 * @param result the binding result object to hold validation errors
+	 * @return the view name for updating a bid or redirects to the bid list view if successful
+	 */
+	@PostMapping(&quot;/bid/update/{id}&quot;)
+	public String updateBid(@PathVariable(&quot;id&quot;) Integer id, @Valid Bid bid, BindingResult result) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc" id="L103">			return &quot;bid/update&quot;;</span>
+		}
+<span class="fc" id="L105">		bidService.update(id, bid);</span>
+<span class="fc" id="L106">		return &quot;redirect:/bid/list&quot;;</span>
+	}
+
+	/**
+	 * Deletes an existing bid by its ID.
+	 *
+	 * @param id the ID of the bid to be deleted
+	 * @return redirects to the bid list view after deleting the bid
+	 */
+	@GetMapping(&quot;/bid/delete/{id}&quot;)
+	public String deleteBid(@PathVariable(&quot;id&quot;) Integer id) {
+<span class="nc" id="L117">		bidService.deleteById(id);</span>
+<span class="nc" id="L118">		return &quot;redirect:/bid/list&quot;;</span>
+	}
+
+	/**
+	 * Retrieves the remote user from the HTTP servlet request and adds it as a model attribute.
+	 *
+	 * @param httpServletRequest the HTTP servlet request to retrieve the remote user
+	 * @return the remote user object
+	 */
+	@ModelAttribute(&quot;remoteUser&quot;)
+	public Object remoteUser(final HttpServletRequest httpServletRequest) {
+<span class="fc" id="L129">		return httpServletRequest.getRemoteUser();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
