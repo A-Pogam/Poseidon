@@ -5,12 +5,15 @@ import com.poseidoncapitalsolution.trading.model.Rule;
 import java.util.List;
 
 public interface IRuleService {
-    List<Rule> findAll();
-    Rule findById(Integer id);
-;
-    Rule save(Rule rule);
+	List<Rule> findAll();
 
-    void update(Integer id, Rule rule);
+	Rule findById(Integer id);;
 
-    void deleteById(Integer id);
+	Rule save(Rule rule);
+
+	void update(Integer id, Rule rule);
+
+	void deleteById(Integer id);
+
+	void resetRuleTestTable();
 }

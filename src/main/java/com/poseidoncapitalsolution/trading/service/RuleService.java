@@ -42,5 +42,8 @@ public class RuleService implements IRuleService {
         ruleRepository.deleteById(id);
     }
 
-
+    @Override
+	public void resetRuleTestTable() {
+    	ruleRepository.resetRuleTestTable();
+	}
 }

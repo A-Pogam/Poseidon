@@ -46,4 +46,9 @@ public class CurvePointService implements ICurvePointService {
     public List<CurvePoint> findByCurveId(Integer curveId) {
         return curvePointRepository.findByCurveId(curveId);
     }
+    
+    @Override
+	public void resetCurvePointTestTable() {
+    	curvePointRepository.resetCurvePointTestTable();
+	}
 }

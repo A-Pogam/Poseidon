@@ -40,4 +40,9 @@ public class TradeService implements ITradeService {
     public void deleteById(Integer id) {
         tradeRepository.deleteById(id);
     }
+    
+    @Override
+	public void resetTradeTestTable() {
+    	tradeRepository.resetTradeTestTable();
+	}
 }

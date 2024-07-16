@@ -48,4 +48,9 @@ public class UserService implements IUserService {
     public void deleteById(Integer id) {
         userRepository.deleteById(id);
     }
+    
+    @Override
+	public void resetUserTestTable() {
+    	userRepository.resetUserTestTable();
+	}
 }

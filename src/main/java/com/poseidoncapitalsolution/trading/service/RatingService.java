@@ -41,4 +41,9 @@ public class RatingService implements IRatingService {
     public void deleteById(Integer id) {
         ratingRepository.deleteById(id);
     }
+    
+    @Override
+	public void resetRatingTestTable() {
+    	ratingRepository.resetRatingTestTable();
+	}
 }
