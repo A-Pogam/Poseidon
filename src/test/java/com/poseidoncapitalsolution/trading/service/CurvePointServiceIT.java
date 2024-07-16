@@ -1,112 +1,112 @@
 package com.poseidoncapitalsolution.trading.service;
 
 import com.poseidoncapitalsolution.trading.model.CurvePoint;
-import com.poseidoncapitalsolution.trading.repository.contracts.CurvePointRepository;
+import com.poseidoncapitalsolution.trading.service.contracts.ICurvePointService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@TestPropertySource(locations = "file:src/main/resources/application-test.properties")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CurvePointServiceIT {
 
-    @Mock
-    private CurvePointRepository curvePointRepository;
-
-    @InjectMocks
-    private CurvePointService curvePointService;
-
-    private CurvePoint curvePoint;
+    @Autowired
+    private ICurvePointService iCurvePointService;
 
     @BeforeEach
     public void setUp() {
-        curvePoint = new CurvePoint();
-        curvePoint.setCurveId(1);
-        curvePoint.setTerm(10.0);
-        curvePoint.setValue(100.0);
+        CurvePoint curvePoint1 = new CurvePoint();
+        curvePoint1.setCurveId(1);
+        curvePoint1.setTerm(10.0);
+        curvePoint1.setValue(100.0);
+        iCurvePointService.save(curvePoint1);
+
+        CurvePoint curvePoint2 = new CurvePoint();
+        curvePoint2.setCurveId(2);
+        curvePoint2.setTerm(20.0);
+        curvePoint2.setValue(200.0);
+        iCurvePointService.save(curvePoint2);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        iCurvePointService.findAll().forEach(cp -> iCurvePointService.deleteById(cp.getCurveId()));
     }
 
     @Test
-    public void testFindAll() {
-        List<CurvePoint> curvePoints = Arrays.asList(curvePoint, new CurvePoint());
-        when(curvePointRepository.findAll()).thenReturn(curvePoints);
+    public void getCurvePointById_returnCurvePoint() {
+        CurvePoint curvePoint = iCurvePointService.findById(1);
 
-        List<CurvePoint> result = curvePointService.findAll();
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(curvePointRepository, times(1)).findAll();
+        assertThat(curvePoint).isNotNull();
+        assertThat(curvePoint.getTerm()).isEqualTo(10.0);
+        assertThat(curvePoint.getValue()).isEqualTo(100.0);
     }
 
     @Test
-    public void testFindById() {
-        when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(curvePoint));
+    public void getCurvePointById_returnNull() {
+        CurvePoint curvePoint = iCurvePointService.findById(0);
 
-        CurvePoint result = curvePointService.findById(1);
-
-        assertNotNull(result);
-        assertEquals(curvePoint.getCurveId(), result.getCurveId());
-        verify(curvePointRepository, times(1)).findById(anyInt());
+        assertThat(curvePoint).isNull();
     }
 
     @Test
-    public void testFindById_NotFound() {
-        when(curvePointRepository.findById(anyInt())).thenReturn(Optional.empty());
+    public void addOrUpdateCurvePoint_returnCurvePoint() {
+        CurvePoint newCurvePoint = new CurvePoint();
+        newCurvePoint.setTerm(50.0);
+        newCurvePoint.setValue(500.0);
 
-        CurvePoint result = curvePointService.findById(1);
+        iCurvePointService.save(newCurvePoint);
 
-        assertNull(result);
-        verify(curvePointRepository, times(1)).findById(anyInt());
+        CurvePoint savedCurvePoint = iCurvePointService.findById(newCurvePoint.getCurveId());
+        assertThat(savedCurvePoint).isNotNull();
+        assertThat(savedCurvePoint.getTerm()).isEqualTo(50.0);
+        assertThat(savedCurvePoint.getValue()).isEqualTo(500.0);
     }
 
     @Test
-    public void testSave() {
-        when(curvePointRepository.save(any(CurvePoint.class))).thenReturn(curvePoint);
+    public void updateCurvePoint_returnUpdatedCurvePoint() {
+        Integer existingCurveId = 1;
+        CurvePoint updatedCurvePoint = new CurvePoint();
+        updatedCurvePoint.setCurveId(existingCurveId);
+        updatedCurvePoint.setTerm(20.0);
+        updatedCurvePoint.setValue(200.0);
 
-        CurvePoint result = curvePointService.save(curvePoint);
+        iCurvePointService.update(existingCurveId, updatedCurvePoint);
 
-        assertNotNull(result);
-        assertEquals(curvePoint.getCurveId(), result.getCurveId());
-        verify(curvePointRepository, times(1)).save(any(CurvePoint.class));
+        CurvePoint curvePoint = iCurvePointService.findById(existingCurveId);
+        assertThat(curvePoint).isNotNull();
+        assertThat(curvePoint.getTerm()).isEqualTo(20.0);
+        assertThat(curvePoint.getValue()).isEqualTo(200.0);
     }
 
     @Test
-    public void testUpdate() {
-        curvePointService.update(1, curvePoint);
+    public void deleteCurvePoint_deleteCurvePoint() {
+        Integer curvePointIdToDelete = 2;
+        CurvePoint curvePointToDelete = iCurvePointService.findById(curvePointIdToDelete);
 
-        verify(curvePointRepository, times(1)).save(curvePoint);
-        assertEquals(1, curvePoint.getCurveId());
+        assertThat(curvePointToDelete).isNotNull();
+
+        iCurvePointService.deleteById(curvePointIdToDelete);
+
+        CurvePoint deletedCurvePoint = iCurvePointService.findById(curvePointIdToDelete);
+        assertThat(deletedCurvePoint).isNull();
     }
 
     @Test
-    public void testDeleteById() {
-        doNothing().when(curvePointRepository).deleteById(anyInt());
+    public void findByCurveId_returnCurvePoints() {
+        List<CurvePoint> curvePoints = iCurvePointService.findByCurveId(1);
 
-        curvePointService.deleteById(1);
-
-        verify(curvePointRepository, times(1)).deleteById(anyInt());
-    }
-
-    @Test
-    public void testFindByCurveId() {
-        List<CurvePoint> curvePoints = Arrays.asList(curvePoint, new CurvePoint());
-        when(curvePointRepository.findByCurveId(anyInt())).thenReturn(curvePoints);
-
-        List<CurvePoint> result = curvePointService.findByCurveId(1);
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(curvePointRepository, times(1)).findByCurveId(anyInt());
+        assertThat(curvePoints).isNotNull();
+        assertThat(curvePoints.size()).isGreaterThanOrEqualTo(1);
+        assertThat(curvePoints.get(0).getCurveId()).isEqualTo(1);
     }
 }

@@ -1,101 +1,109 @@
 package com.poseidoncapitalsolution.trading.service;
 
 import com.poseidoncapitalsolution.trading.model.Trade;
-import com.poseidoncapitalsolution.trading.repository.contracts.TradeRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.poseidoncapitalsolution.trading.service.contracts.ITradeService;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@TestPropertySource(locations = "file:src/main/resources/application-test.properties")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TradeServiceIT {
 
-    @Mock
-    private TradeRepository tradeRepository;
+    @Autowired
+    private ITradeService iTradeService;
 
-    @InjectMocks
-    private TradeService tradeService;
+    @BeforeAll
+    public void fillTradeTable() {
+        for (int i = 1; i <= 3; i++) {
+            Trade trade = new Trade();
+            trade.setAccount("Account" + i);
+            trade.setType("Type" + i);
+            trade.setBuyQuantity(100.0 + i);
+            iTradeService.save(trade);
+        }
+    }
 
-    private Trade trade;
-
-    @BeforeEach
-    public void setUp() {
-        trade = new Trade();
-        trade.setTradeId(1);
-        trade.setAccount("Test Account");
-        trade.setType("Test Type");
-        trade.setBuyQuantity(100.0);
+    @AfterAll
+    public void resetTradeTable() {
+        iTradeService.findAll().forEach(trade -> iTradeService.deleteById(trade.getTradeId()));
     }
 
     @Test
-    public void testFindAll() {
-        List<Trade> trades = Arrays.asList(trade, new Trade());
-        when(tradeRepository.findAll()).thenReturn(trades);
+    public void getTradeById_returnTrade() {
+        Trade trade = iTradeService.findById(1);
 
-        List<Trade> result = tradeService.findAll();
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(tradeRepository, times(1)).findAll();
+        assertThat(trade).isNotNull();
+        assertThat(trade.getAccount()).isEqualTo("Account1");
+        assertThat(trade.getType()).isEqualTo("Type1");
+        assertThat(trade.getBuyQuantity()).isEqualTo(101.0);
     }
 
     @Test
-    public void testFindById() {
-        when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(trade));
+    public void getTradeById_returnNull() {
+        Trade trade = iTradeService.findById(0);
 
-        Trade result = tradeService.findById(1);
-
-        assertNotNull(result);
-        assertEquals(trade.getTradeId(), result.getTradeId());
-        verify(tradeRepository, times(1)).findById(anyInt());
+        assertThat(trade).isNull();
     }
 
     @Test
-    public void testFindById_NotFound() {
-        when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
+    public void addOrUpdateTrade_returnTrade() {
+        Trade newTrade = new Trade();
+        newTrade.setAccount("NewAccount");
+        newTrade.setType("NewType");
+        newTrade.setBuyQuantity(42.0);
 
-        Trade result = tradeService.findById(1);
+        iTradeService.save(newTrade);
 
-        assertNull(result);
-        verify(tradeRepository, times(1)).findById(anyInt());
+        List<Trade> trades = iTradeService.findAll();
+        Trade tradeAdded = trades.stream()
+                .filter(trade -> "NewAccount".equals(trade.getAccount()))
+                .findFirst()
+                .orElse(null);
+
+        assertThat(tradeAdded).isNotNull();
+        assertThat(tradeAdded.getAccount()).isEqualTo(newTrade.getAccount());
+        assertThat(tradeAdded.getType()).isEqualTo(newTrade.getType());
+        assertThat(tradeAdded.getBuyQuantity()).isEqualTo(newTrade.getBuyQuantity());
     }
 
     @Test
-    public void testSave() {
-        when(tradeRepository.save(any(Trade.class))).thenReturn(trade);
+    public void updateTrade_returnUpdatedTrade() {
+        Integer existingTradeId = 1;
+        Trade updatedTrade = new Trade();
+        updatedTrade.setTradeId(existingTradeId);
+        updatedTrade.setAccount("UpdatedAccount");
+        updatedTrade.setType("UpdatedType");
+        updatedTrade.setBuyQuantity(1000.0);
 
-        Trade result = tradeService.save(trade);
+        iTradeService.update(existingTradeId, updatedTrade);
 
-        assertNotNull(result);
-        assertEquals(trade.getTradeId(), result.getTradeId());
-        verify(tradeRepository, times(1)).save(any(Trade.class));
+        Trade trade = iTradeService.findById(existingTradeId);
+        assertThat(trade).isNotNull();
+        assertThat(trade.getAccount()).isEqualTo("UpdatedAccount");
+        assertThat(trade.getType()).isEqualTo("UpdatedType");
+        assertThat(trade.getBuyQuantity()).isEqualTo(1000.0);
     }
 
     @Test
-    public void testUpdate() {
-        tradeService.update(1, trade);
+    public void deleteTrade_deleteTrade() {
+        Integer tradeIdToDelete = 2;
+        Trade tradeToDelete = iTradeService.findById(tradeIdToDelete);
 
-        verify(tradeRepository, times(1)).save(trade);
-        assertEquals(1, trade.getTradeId());
-    }
+        assertThat(tradeToDelete).isNotNull();
 
-    @Test
-    public void testDeleteById() {
-        doNothing().when(tradeRepository).deleteById(anyInt());
+        iTradeService.deleteById(tradeIdToDelete);
 
-        tradeService.deleteById(1);
-
-        verify(tradeRepository, times(1)).deleteById(anyInt());
+        Trade deletedTrade = iTradeService.findById(tradeIdToDelete);
+        assertThat(deletedTrade).isNull();
     }
 }

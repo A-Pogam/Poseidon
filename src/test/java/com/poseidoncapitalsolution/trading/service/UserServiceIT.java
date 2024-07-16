@@ -1,99 +1,97 @@
 package com.poseidoncapitalsolution.trading.service;
 
 import com.poseidoncapitalsolution.trading.model.User;
-import com.poseidoncapitalsolution.trading.repository.contracts.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.poseidoncapitalsolution.trading.service.contracts.IUserService;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@TestPropertySource(locations = "file:src/main/resources/application-test.properties")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserServiceIT {
 
-    @Mock
-    private UserRepository userRepository;
+    @Autowired
+    private IUserService userService;
 
-    @Mock
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @InjectMocks
-    private UserService userService;
+    @BeforeAll
+    public void fillUserTable() {
+        for (int i = 1; i <= 3; i++) {
+            User user = new User();
+            user.setUsername("User" + i);
+            user.setPassword(passwordEncoder.encode("password" + i));
+            user.setRole("ADMIN");
+            user.setFullname("Full Name " + i);
+            userService.saveUser(user);
+        }
+    }
 
-    private User user;
-
-    @BeforeEach
-    public void setUp() {
-        user = new User();
-        user.setId(1);
-        user.setUsername("testUser");
-        user.setPassword("password");
+    @AfterAll
+    public void resetUserTable() {
+        userService.getAllUsers().forEach(user -> userService.deleteById(user.getId()));
     }
 
     @Test
-    public void testFindByUsername() {
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
+    public void getUserByUsername_returnUser() {
+        Optional<User> user = userService.findByUsername("User1");
 
-        Optional<User> result = userService.findByUsername("testUser");
-
-        assertTrue(result.isPresent());
-        assertEquals(user.getUsername(), result.get().getUsername());
-        verify(userRepository, times(1)).findByUsername(anyString());
-    }
-
-
-
-    @Test
-    public void testGetAllUsers() {
-        List<User> users = Arrays.asList(user, new User());
-        when(userRepository.findAll()).thenReturn(users);
-
-        List<User> result = userService.getAllUsers();
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(userRepository, times(1)).findAll();
+        assertThat(user).isPresent();
+        assertThat(user.get().getUsername()).isEqualTo("User1");
     }
 
     @Test
-    public void testFindById() {
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
+    public void getUserByUsername_returnEmpty() {
+        Optional<User> user = userService.findByUsername("NonExistentUser");
 
-        Optional<User> result = userService.findById(1);
-
-        assertTrue(result.isPresent());
-        assertEquals(user.getId(), result.get().getId());
-        verify(userRepository, times(1)).findById(anyInt());
+        assertThat(user).isNotPresent();
     }
 
     @Test
-    public void testFindById_NotFound() {
-        when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
+    public void getAllUsers_returnUsers() {
+        List<User> users = userService.getAllUsers();
 
-        Optional<User> result = userService.findById(1);
-
-        assertFalse(result.isPresent());
-        verify(userRepository, times(1)).findById(anyInt());
+        assertThat(users).isNotNull();
+        assertThat(users.size()).isEqualTo(3);
     }
 
     @Test
-    public void testDeleteById() {
-        doNothing().when(userRepository).deleteById(anyInt());
+    public void getUserById_returnUser() {
+        Optional<User> user = userService.findById(1);
 
-        userService.deleteById(1);
+        assertThat(user).isPresent();
+        assertThat(user.get().getId()).isEqualTo(1);
+    }
 
-        verify(userRepository, times(1)).deleteById(anyInt());
+    @Test
+    public void getUserById_returnEmpty() {
+        Optional<User> user = userService.findById(999);
+
+        assertThat(user).isNotPresent();
+    }
+
+    @Test
+    public void deleteUserById_deletesUser() {
+        Integer userIdToDelete = 2;
+        Optional<User> userBeforeDeletion = userService.findById(userIdToDelete);
+
+        assertThat(userBeforeDeletion).isPresent();
+
+        userService.deleteById(userIdToDelete);
+
+        Optional<User> userAfterDeletion = userService.findById(userIdToDelete);
+        assertThat(userAfterDeletion).isNotPresent();
     }
 }
