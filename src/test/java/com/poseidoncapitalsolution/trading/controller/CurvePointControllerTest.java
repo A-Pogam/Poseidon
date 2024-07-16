@@ -29,7 +29,7 @@ public class CurvePointControllerTest {
     @MockBean
     private ICurvePointService curvePointService;
 
-    private CurvePoint anyCurvePoint = new CurvePoint(1, 1, 1d, 1d);
+    private CurvePoint anyCurvePoint = new CurvePoint(1, 1d, 1d);
     private List<CurvePoint> curvePoints = new ArrayList<>(Arrays.asList(anyCurvePoint, anyCurvePoint, anyCurvePoint));
 
     @Test
