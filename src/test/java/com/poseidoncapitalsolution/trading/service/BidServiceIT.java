@@ -55,7 +55,7 @@ public class BidServiceIT {
     }
 
     @Test
-    public void addOrUpdateBid_returnBid() {
+    public void saveBid_returnBid() {
         Bid newBid = new Bid(null, "NewAccount", "NewType", 42d);
 
         iBidService.save(newBid);

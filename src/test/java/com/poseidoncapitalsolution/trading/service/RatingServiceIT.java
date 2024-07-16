@@ -1,7 +1,9 @@
 package com.poseidoncapitalsolution.trading.service;
 
-import com.poseidoncapitalsolution.trading.model.Rating;
-import com.poseidoncapitalsolution.trading.service.contracts.IRatingService;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,106 +12,92 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.poseidoncapitalsolution.trading.model.Rating;
+import com.poseidoncapitalsolution.trading.service.contracts.IRatingService;
 
 @SpringBootTest
 @TestPropertySource(locations = "file:src/main/resources/application-test.properties")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RatingServiceIT {
 
-    @Autowired
-    private IRatingService iRatingService;
+	@Autowired
+	private IRatingService iRatingService;
+	
+	@BeforeAll
+	public void fillRatingTable() {
+		for (int i = 1; i <= 3; i++) {
+			iRatingService.save(new Rating(null, "moodysRating" + i, "sandPRating" + i, "FitchRating" + i, i));
+		}
+	}
+	
+	@AfterAll
+	public void resetRatingTable() {
+		iRatingService.resetRatingTestTable();
+	}
+	
+	@Test
+	public void getRatings_returnRatings() {
+		List<Rating> ratings = iRatingService.findAll();
+		
+		assertThat(ratings).isNotEmpty();
+		assertThat(ratings.getFirst().getId()).isEqualTo(1);
+		assertThat(ratings.getFirst().getMoodysRating()).isEqualTo("moodysRating1");
+		assertThat(ratings.getFirst().getSandPRating()).isEqualTo("sandPRating1");
+		assertThat(ratings.getFirst().getFitchRating()).isEqualTo("FitchRating1");
+		assertThat(ratings.getFirst().getOrderNumber()).isEqualTo(1);
+	}
 
-    @BeforeAll
-    public void fillRatingTable() {
-        for (int i = 1; i <= 3; i++) {
-            Rating rating = new Rating();
-            rating.setMoodysRating("Moodys" + i);
-            rating.setSandPRating("S&P" + i);
-            rating.setFitchRating("Fitch" + i);
-            rating.setOrderNumber(i);
-            iRatingService.save(rating);
-        }
-    }
+	@Test
+	public void getRatingById_returnRating() {
+		Rating rating = iRatingService.findById(1);
+		
+		assertThat(rating.getId()).isEqualTo(1);
+		assertThat(rating.getMoodysRating()).isEqualTo("moodysRating1");
+		assertThat(rating.getSandPRating()).isEqualTo("sandPRating1");
+		assertThat(rating.getFitchRating()).isEqualTo("FitchRating1");
+		assertThat(rating.getOrderNumber()).isEqualTo(1);
+	}
+	
+	@Test
+	public void getRatingById_returnNull() {
+		Rating rating = iRatingService.findById(0);
+		
+		assertThat(rating).isEqualTo(null);
+	}
 
-    @AfterAll
-    public void resetRatingTable() {
-        iRatingService.findAll().forEach(rating -> iRatingService.deleteById(rating.getId()));
-    }
-
-    @Test
-    public void getRatingById_returnRating() {
-        Rating rating = iRatingService.findById(1);
-
-        assertThat(rating).isNotNull();
-        assertThat(rating.getMoodysRating()).isEqualTo("Moodys1");
-        assertThat(rating.getSandPRating()).isEqualTo("S&P1");
-        assertThat(rating.getFitchRating()).isEqualTo("Fitch1");
-        assertThat(rating.getOrderNumber()).isEqualTo(1);
-    }
-
-    @Test
-    public void getRatingById_returnNull() {
-        Rating rating = iRatingService.findById(0);
-
-        assertThat(rating).isNull();
-    }
-
-    @Test
-    public void addOrUpdateRating_returnRating() {
-        Rating newRating = new Rating();
-        newRating.setMoodysRating("NewMoodys");
-        newRating.setSandPRating("NewS&P");
-        newRating.setFitchRating("NewFitch");
-        newRating.setOrderNumber(99);
-
-        iRatingService.save(newRating);
-
-        List<Rating> ratings = iRatingService.findAll();
-        Rating ratingAdded = ratings.stream()
-                .filter(r -> "NewMoodys".equals(r.getMoodysRating()))
-                .findFirst()
-                .orElse(null);
-
-        assertThat(ratingAdded).isNotNull();
-        assertThat(ratingAdded.getMoodysRating()).isEqualTo(newRating.getMoodysRating());
-        assertThat(ratingAdded.getSandPRating()).isEqualTo(newRating.getSandPRating());
-        assertThat(ratingAdded.getFitchRating()).isEqualTo(newRating.getFitchRating());
-        assertThat(ratingAdded.getOrderNumber()).isEqualTo(newRating.getOrderNumber());
-    }
-
-    @Test
-    public void updateRating_returnUpdatedRating() {
-        Integer existingRatingId = 1;
-        Rating updatedRating = new Rating();
-        updatedRating.setId(existingRatingId);
-        updatedRating.setMoodysRating("UpdatedMoodys");
-        updatedRating.setSandPRating("UpdatedS&P");
-        updatedRating.setFitchRating("UpdatedFitch");
-        updatedRating.setOrderNumber(100);
-
-        iRatingService.update(existingRatingId, updatedRating);
-
-        Rating rating = iRatingService.findById(existingRatingId);
-        assertThat(rating).isNotNull();
-        assertThat(rating.getMoodysRating()).isEqualTo("UpdatedMoodys");
-        assertThat(rating.getSandPRating()).isEqualTo("UpdatedS&P");
-        assertThat(rating.getFitchRating()).isEqualTo("UpdatedFitch");
-        assertThat(rating.getOrderNumber()).isEqualTo(100);
-    }
-
-    @Test
-    public void deleteRating_deleteRating() {
-        Integer ratingIdToDelete = 2;
-        Rating ratingToDelete = iRatingService.findById(ratingIdToDelete);
-
-        assertThat(ratingToDelete).isNotNull();
-
-        iRatingService.deleteById(ratingIdToDelete);
-
-        Rating deletedRating = iRatingService.findById(ratingIdToDelete);
-        assertThat(deletedRating).isNull();
-    }
+	@Test
+	public void saveRating_returnRating() {
+		Rating newRating = new Rating(null, "NewMoodysRating", "NewSandPRating", "NewFitchRating", 42);
+		
+		Rating ratingAdded = iRatingService.save(newRating);
+		
+		assertThat(ratingAdded.getMoodysRating()).isEqualTo(newRating.getMoodysRating());
+		assertThat(ratingAdded.getSandPRating()).isEqualTo(newRating.getSandPRating());
+		assertThat(ratingAdded.getFitchRating()).isEqualTo(newRating.getFitchRating());
+		assertThat(ratingAdded.getOrderNumber()).isEqualTo(newRating.getOrderNumber());
+	}
+	
+	@Test
+	public void updateRating_returnUpdatedBid() {
+	    Integer existingRatingId = 3;
+	    Rating updatedRating = new Rating(null, "UpdatedMoodysRating", "UpdatedSandPRating", "UpdatedFitchRating", 33);
+	
+	    iRatingService.update(existingRatingId, updatedRating);
+	
+	    Rating rating = iRatingService.findById(existingRatingId);
+	    assertThat(rating).isNotNull();
+	    assertThat(rating.getMoodysRating()).isEqualTo(updatedRating.getMoodysRating());
+	    assertThat(rating.getSandPRating()).isEqualTo(updatedRating.getSandPRating());
+	    assertThat(rating.getFitchRating()).isEqualTo(updatedRating.getFitchRating());
+	    assertThat(rating.getOrderNumber()).isEqualTo(updatedRating.getOrderNumber());
+	}
+	
+	@Test
+	public void deleteRating_deleteRating() {
+		Rating ratingToDelete = iRatingService.findById(2);
+		
+		iRatingService.deleteById(2);
+		
+		assertThat(!iRatingService.findAll().contains(ratingToDelete));
+	}
 }
