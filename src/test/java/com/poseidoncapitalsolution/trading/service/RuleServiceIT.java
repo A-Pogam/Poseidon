@@ -1,103 +1,157 @@
 package com.poseidoncapitalsolution.trading.service;
 
 import com.poseidoncapitalsolution.trading.model.Rule;
-import com.poseidoncapitalsolution.trading.repository.contracts.RuleRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import com.poseidoncapitalsolution.trading.service.contracts.IRuleService;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@TestPropertySource(locations = "file:src/main/resources/application-test.properties")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RuleServiceIT {
 
-    @Mock
-    private RuleRepository ruleRepository;
-
-    @InjectMocks
-    private RuleService ruleService;
+    @Autowired
+    private IRuleService ruleService;
 
     private Rule rule;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         rule = new Rule();
-        rule.setId(1);
         rule.setName("Test Rule");
         rule.setDescription("This is a test rule");
         rule.setJson("testJson");
         rule.setTemplate("testTemplate");
         rule.setSqlPart("WHERE TEST = 1");
+
+        ruleService.save(rule);
     }
 
     @Test
     public void testFindAll() {
-        List<Rule> rules = Arrays.asList(rule, new Rule());
-        when(ruleRepository.findAll()).thenReturn(rules);
+        List<Rule> rules = ruleService.findAll();
 
-        List<Rule> result = ruleService.findAll();
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(ruleRepository, times(1)).findAll();
+        assertNotNull(rules);
+        assertEquals(1, rules.size());
     }
 
     @Test
     public void testFindById() {
-        when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
+        Rule foundRule = ruleService.findById(rule.getId());
 
-        Rule result = ruleService.findById(1);
-
-        assertNotNull(result);
-        assertEquals(rule.getId(), result.getId());
-        verify(ruleRepository, times(1)).findById(anyInt());
+        assertNotNull(foundRule);
+        assertEquals(rule.getId(), foundRule.getId());
     }
 
     @Test
     public void testFindById_NotFound() {
-        when(ruleRepository.findById(anyInt())).thenReturn(Optional.empty());
+        Rule foundRule = ruleService.findById(-1);
 
-        Rule result = ruleService.findById(1);
-
-        assertNull(result);
-        verify(ruleRepository, times(1)).findById(anyInt());
+        assertNull(foundRule);
     }
 
     @Test
     public void testSave() {
-        when(ruleRepository.save(any(Rule.class))).thenReturn(rule);
+        Rule newRule = new Rule();
+        newRule.setName("New Rule");
+        newRule.setDescription("This is a new rule");
 
-        Rule result = ruleService.save(rule);
+        Rule savedRule = ruleService.save(newRule);
 
-        assertNotNull(result);
-        assertEquals(rule.getId(), result.getId());
-        verify(ruleRepository, times(1)).save(any(Rule.class));
+        assertNotNull(savedRule);
+        assertNotNull(savedRule.getId());
+        assertEquals(newRule.getName(), savedRule.getName());
+        assertEquals(newRule.getDescription(), savedRule.getDescription());
+
+        ruleService.deleteById(savedRule.getId());
     }
 
     @Test
     public void testUpdate() {
-        ruleService.update(1, rule);
+        rule.setName("Updated Rule");
+        rule.setDescription("This is an updated rule");
 
-        verify(ruleRepository, times(1)).save(rule);
-        assertEquals(1, rule.getId());
+        ruleService.update(rule.getId(), rule);
+
+        Rule updatedRule = ruleService.findById(rule.getId());
+
+        assertNotNull(updatedRule);
+        assertEquals(rule.getName(), updatedRule.getName());
+        assertEquals(rule.getDescription(), updatedRule.getDescription());
     }
 
     @Test
     public void testDeleteById() {
-        doNothing().when(ruleRepository).deleteById(anyInt());
+        ruleService.deleteById(rule.getId());
 
-        ruleService.deleteById(1);
+        Rule deletedRule = ruleService.findById(rule.getId());
 
-        verify(ruleRepository, times(1)).deleteById(anyInt());
+        assertNull(deletedRule);
+    }
+
+    @Test
+    public void testSaveRule_WithMissingName() {
+        Rule rule = new Rule();
+        rule.setDescription("Description");
+        rule.setJson("Json");
+        rule.setTemplate("Template");
+        rule.setSqlPart("Sql Part");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> ruleService.save(rule));
+        assertEquals("Name is mandatory", exception.getMessage());
+    }
+
+    @Test
+    public void testSaveRule_WithMissingDescription() {
+        Rule rule = new Rule();
+        rule.setName("Test Rule");
+        rule.setJson("Json");
+        rule.setTemplate("Template");
+        rule.setSqlPart("Sql Part");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> ruleService.save(rule));
+        assertEquals("Description is mandatory", exception.getMessage());
+    }
+
+    @Test
+    public void testSaveRule_WithMissingJson() {
+        Rule rule = new Rule();
+        rule.setName("Test Rule");
+        rule.setDescription("Description");
+        rule.setTemplate("Template");
+        rule.setSqlPart("Sql Part");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> ruleService.save(rule));
+        assertEquals("Json is mandatory", exception.getMessage());
+    }
+
+    @Test
+    public void testSaveRule_WithMissingTemplate() {
+        Rule rule = new Rule();
+        rule.setName("Test Rule");
+        rule.setDescription("Description");
+        rule.setJson("Json");
+        rule.setSqlPart("Sql Part");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> ruleService.save(rule));
+        assertEquals("Template is mandatory", exception.getMessage());
+    }
+
+    @Test
+    public void testSaveRule_WithMissingSqlPart() {
+        Rule rule = new Rule();
+        rule.setName("Test Rule");
+        rule.setDescription("Description");
+        rule.setJson("Json");
+        rule.setTemplate("Template");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> ruleService.save(rule));
+        assertEquals("Sql Part is mandatory", exception.getMessage());
     }
 }
