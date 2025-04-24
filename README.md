@@ -48,8 +48,7 @@ The application uses an embedded H2 database which will be set up automatically 
 
 ```sh
 spring.datasource.url=jdbc:mysql://localhost:3306/poseidon
-spring.datasource.username=root
-spring.datasource.password=rootroot
+
 ```
 Ensure your database server is running and accessible.
 
